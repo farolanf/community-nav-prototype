@@ -14,9 +14,9 @@
 }
 
 /* Roboto font */
-@include font-family('Roboto', 700, normal, 'Roboto Bold', 'Roboto-Bold', '/font/roboto-v19-latin/', 'roboto-v19-latin-700');
-@include font-family('Roboto', 400, normal, 'Roboto', 'Roboto-Regular', '/font/roboto-v19-latin/', 'roboto-v19-latin-regular');
-@include font-family('Barlow Condensed', 600, normal, 'Barlow Condensed SemiBold', 'BarlowCondensed-SemiBold', '/font/barlow-condensed-v3-latin/', 'barlow-condensed-v3-latin-600');
+@include font-family('Roboto', 700, normal, 'Roboto Bold', 'Roboto-Bold', '#{$font-path}/roboto-v19-latin/', 'roboto-v19-latin-700');
+@include font-family('Roboto', 400, normal, 'Roboto', 'Roboto-Regular', '#{$font-path}/roboto-v19-latin/', 'roboto-v19-latin-regular');
+@include font-family('Barlow Condensed', 600, normal, 'Barlow Condensed SemiBold', 'BarlowCondensed-SemiBold', '#{$font-path}/barlow-condensed-v3-latin/', 'barlow-condensed-v3-latin-600');
 
 @mixin Roboto-Bold {
   font-family: 'Roboto';
