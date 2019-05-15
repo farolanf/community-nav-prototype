@@ -1,6 +1,8 @@
 import React, { useState, useMemo, useLayoutEffect } from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
+
+import ChosenArrow from '../ChosenArrow'
 import styles from './styles.module.scss'
 
 let id = 1
@@ -97,7 +99,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
   const activeMenu3 = activeMenu2 && activeMenu2.subMenu
 
   return (
-    <div className={cn(styles.themeWrapper, styles[`theme-${theme}`])}>
+    <div className={cn(styles.themeWrapper, `theme-${theme}`)}>
       <div className={styles.headerNavUi}>
         <div className={styles.primaryNavContainer}>
           <div className={styles.primaryNav}>
@@ -135,6 +137,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
                 </div>
               )
             ]))}
+            <ChosenArrow />
           </div>
           <div className={styles.primaryNavRight}>
             {rightMenu.map((level1, i) => (
