@@ -1,5 +1,6 @@
 import React from 'react';
 import { TopNav } from 'tc-nav-react'
+import './app.css'
 
 function App() {
   var navMenus = [
