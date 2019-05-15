@@ -1,5 +1,5 @@
 import React from 'react';
-import { TopNav } from 'tc-nav-react'
+import TopNav from './components/TopNav'
 import './app.css'
 
 function App() {
@@ -8,81 +8,81 @@ function App() {
       title: 'BUSINESS',
       subMenu: [
         {
-          title: "Solutions",
+          title: 'Solutions',
           subMenu: [
-            { title: "All Solutions" },
-            { title: "Apps" },
-            { title: "Websites" },
-            { title: "Product Design" },
-            { title: "Development Tasks" },
-            { title: "Analytics & Data Science" },
-            { title: "Testing & QA" },
-            { title: "How It Works" },
+            { title: 'All Solutions' },
+            { title: 'Apps' },
+            { title: 'Websites' },
+            { title: 'Product Design' },
+            { title: 'Development Tasks' },
+            { title: 'Analytics & Data Science' },
+            { title: 'Testing & QA' },
+            { title: 'How It Works' },
           ]
         },
         {
-          title: "Enterprise Programs",
+          title: 'Enterprise Programs',
           subMenu: [
-            { title: "All Solutions" },
-            { title: "Apps" },
-            { title: "Websites" },
-            { title: "Product Design" },
-            { title: "Development Tasks" },
-            { title: "Analytics & Data Science" },
-            { title: "Testing & QA" },
-            { title: "How It Works" },
+            { title: 'All Solutions2' },
+            { title: 'Apps2' },
+            { title: 'Websites2' },
+            { title: 'Product Design2' },
+            { title: 'Development Tasks2' },
+            { title: 'Analytics & Data Science2' },
+            { title: 'Testing & QA2' },
+            { title: 'How It Works2' },
           ]
         },
         {
-          title: "Customer Success",
+          title: 'Customer Success',
           subMenu: [
-            { title: "All Solutions" },
-            { title: "Apps" },
-            { title: "Websites" },
-            { title: "Product Design" },
-            { title: "Development Tasks" },
-            { title: "Analytics & Data Science" },
-            { title: "Testing & QA" },
-            { title: "How It Works" },
+            { title: 'All Solutions3' },
+            { title: 'Apps3' },
+            { title: 'Websites3' },
+            { title: 'Product Design3' },
+            { title: 'Development Tasks3' },
+            { title: 'Analytics & Data Science3' },
+            { title: 'Testing & QA3' },
+            { title: 'How It Works3' },
           ]
         },
         {
-          title: "Company",
+          title: 'Company',
           subMenu: [
-            { title: "All Solutions" },
-            { title: "Apps" },
-            { title: "Websites" },
-            { title: "Product Design" },
-            { title: "Development Tasks" },
-            { title: "Analytics & Data Science" },
-            { title: "Testing & QA" },
-            { title: "How It Works" },
+            { title: 'All Solutions4' },
+            { title: 'Apps4' },
+            { title: 'Websites4' },
+            { title: 'Product Design4' },
+            { title: 'Development Tasks4' },
+            { title: 'Analytics & Data Science4' },
+            { title: 'Testing & QA4' },
+            { title: 'How It Works4' },
           ]
         },
         {
-          title: "Resources",
+          title: 'Resources',
           subMenu: [
-            { title: "All Solutions" },
-            { title: "Apps" },
-            { title: "Websites" },
-            { title: "Product Design" },
-            { title: "Development Tasks" },
-            { title: "Analytics & Data Science" },
-            { title: "Testing & QA" },
-            { title: "How It Works" },
+            { title: 'All Solutions5' },
+            { title: 'Apps5' },
+            { title: 'Websites5' },
+            { title: 'Product Design5' },
+            { title: 'Development Tasks5' },
+            { title: 'Analytics & Data Science5' },
+            { title: 'Testing & QA5' },
+            { title: 'How It Works5' },
           ]
         },
         {
-          title: "Blog",
+          title: 'Blog',
           subMenu: [
-            { title: "All Solutions" },
-            { title: "Apps" },
-            { title: "Websites" },
-            { title: "Product Design" },
-            { title: "Development Tasks" },
-            { title: "Analytics & Data Science" },
-            { title: "Testing & QA" },
-            { title: "How It Works" },
+            { title: 'All Solutions6' },
+            { title: 'Apps6' },
+            { title: 'Websites6' },
+            { title: 'Product Design6' },
+            { title: 'Development Tasks6' },
+            { title: 'Analytics & Data Science6' },
+            { title: 'Testing & QA6' },
+            { title: 'How It Works6' },
           ]
         },
       ]
@@ -91,66 +91,73 @@ function App() {
       title: 'WORK',
       subMenu: [
         {
-          title: "Design",
+          title: 'Design',
           subMenu: [
-            { title: "Overview" },
-            { title: "Work List" },
-            { title: "Stats" },
-            { title: "Problem archive" },
-            { title: "Learn" },
-            { title: "Topcoder Open" },
+            { title: 'Overview' },
+            { title: 'Work List' },
+            { title: 'Stats' },
+            { title: 'Problem archive' },
+            { title: 'Learn' },
+            { title: 'Topcoder Open' },
           ]
         },
         {
-          title: "Development",
+          title: 'Development',
           subMenu: [
-            { title: "Overview" },
-            { title: "Work List" },
-            { title: "Stats" },
-            { title: "Problem archive" },
-            { title: "Learn" },
-            { title: "Topcoder Open" },
+            { title: 'Overview2' },
+            { title: 'Work List2' },
+            { title: 'Stats2' },
+            { title: 'Problem archive2' },
+            { title: 'Learn2' },
+            { title: 'Topcoder Open2' },
           ]
         },
         {
-          title: "Data Science",
+          title: 'Data Science',
           subMenu: [
-            { title: "Overview" },
-            { title: "Work List" },
-            { title: "Stats" },
-            { title: "Problem archive" },
-            { title: "Learn" },
-            { title: "Topcoder Open" },
+            { title: 'Overview3' },
+            { title: 'Work List3' },
+            { title: 'Stats3' },
+            { title: 'Problem archive3' },
+            { title: 'Learn3' },
+            { title: 'Topcoder Open3' },
           ]
         },
         {
-          title: "QA",
+          title: 'QA',
           subMenu: [
-            { title: "Overview" },
-            { title: "Work List" },
-            { title: "Stats" },
-            { title: "Problem archive" },
-            { title: "Learn" },
-            { title: "Topcoder Open" },
+            { title: 'Overview4' },
+            { title: 'Work List4' },
+            { title: 'Stats4' },
+            { title: 'Problem archive4' },
+            { title: 'Learn4' },
+            { title: 'Topcoder Open4' },
           ]
         },
         {
-          title: "Topcoder Open",
+          title: 'Topcoder Open',
           subMenu: [
-            { title: "Overview" },
-            { title: "Work List" },
-            { title: "Stats" },
-            { title: "Problem archive" },
-            { title: "Learn" },
-            { title: "Topcoder Open" },
+            { title: 'Overview5' },
+            { title: 'Work List5' },
+            { title: 'Stats5' },
+            { title: 'Problem archive5' },
+            { title: 'Learn5' },
+            { title: 'Topcoder Open5' },
           ]
         }
       ]
     },
+    {
+      title: 'LOGIN',
+      pos: 'right'
+    }
   ]
   return (
-    <div className="App">
-      <TopNav menu={navMenus} />
+    <div className='App'>
+      <TopNav
+        menu={navMenus}
+        logo={<img src='/img/tc-logo.svg' alt='logo' />}
+      />
     </div>
   );
 }
