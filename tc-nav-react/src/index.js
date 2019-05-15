@@ -1,2 +1,2 @@
-export TopNav from './TopNav'
-export SubNav from './SubNav'
+export TopNav from './components/TopNav'
+export SubNav from './components/SubNav'

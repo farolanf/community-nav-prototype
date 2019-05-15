@@ -1,5 +1,5 @@
-import TopNav from './TopNav'
-import SubNav from './SubNav'
+import TopNav from './components/TopNav'
+import SubNav from './components/SubNav'
 
 export default {
   TopNav,
