@@ -10,6 +10,9 @@
     "build:lib": "node build.js",
     "build:dist": "webpack --config webpack.config.dist.js --progress --colors",
     "build:dist:min": "webpack --config webpack.config.dist.js --mode production --output-filename tc-nav-react.min.js --progress --colors",
+    "docs": "nodemon -w src -w styleguide.config.js -e js,jsx,md node_modules/.bin/styleguidist build",
+    "docs:build": "node node_modules/.bin/styleguidist build",
+    "docs:serve": "browser-sync docs --files docs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
@@ -19,6 +22,7 @@
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.6",
+    "browser-sync": "^2.26.5",
     "css-loader": "^2.1.1",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
@@ -29,6 +33,9 @@
     "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-standard": "^4.0.0",
     "node-sass": "^4.12.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-styleguidist": "^9.0.9",
     "rimraf": "^2.6.3",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
