@@ -1,10 +1,13 @@
-import React, { useState, useMemo, useLayoutEffect } from 'react'
+import React, { useState, useMemo, useEffect, useLayoutEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
+import _ from 'lodash'
 
 import ChosenArrow from '../ChosenArrow'
 import IconSelect from '../IconSelect'
 import styles from './styles.module.scss'
+
+const moreId = 'more'
 
 let id = 1
 
@@ -51,6 +54,9 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
 
   const [showLeftMenu, setShowLeftMenu] = useState()
   const [showMobileSubMenu, setShowMobileSubMenu] = useState()
+
+  const [moreMenu, setMoreMenu] = useState()
+  const [showMore, setShowMore] = useState()
 
   const createSetMenuRef = menuId => el => {
     cache.refs[menuId] = el
@@ -132,6 +138,10 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
     setIconSelectPos(menuId)
   }
 
+  const handleClickMore = () => {
+    setShowMore(x => !x)
+  }
+
   const handleClickLeftMenu = () => setShowLeftMenu(x => !x)
 
   const createHandleClickLevel2Mobile = menuId => () => {
@@ -150,7 +160,8 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
 
   const handleClickSubMenu = () => setShowMobileSubMenu(x => !x)
 
-  useLayoutEffect(() => {
+  // slide menu
+  useEffect(() => {
     leftNav.forEach(menu => {
       if (!cache.slide[menu.id] || !cache.refs[menu.id]) return
       cache.slide[menu.id] = false
@@ -168,6 +179,53 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
       })
     })
   }, [collapsed, leftNav, cache.refs, cache.slide])
+
+  // trigger more menu generation on level 1 item change
+  useEffect(() => {
+    setMoreMenu([])
+  }, [activeMenu1])
+
+  // show/hide level 2 more menu
+  const generateMoreMenu = useCallback(() => {
+    // only proceed if more menu is empty
+    if (moreMenu && moreMenu.length) return
+    if (!activeMenu1 || !activeMenu1.subMenu) return
+    const newMoreMenu = []
+    let prect
+    for (let i = activeMenu1.subMenu.length - 1; i >= 0; i--) {
+      const menu = activeMenu1.subMenu[i]
+      const menuEl = cache.refs[menu.id]
+      if (!menuEl) return
+      const rect = menuEl.getBoundingClientRect()
+      if (!prect) {
+        prect = menuEl.parentElement.getBoundingClientRect()
+      }
+      // add the item if it's overflowing
+      if (rect.right > prect.right) {
+        newMoreMenu.unshift(menu)
+      } else if (newMoreMenu.length) {
+        // add the last non overflowed item to make sure we have space
+        // for the 'more' menu
+        newMoreMenu.unshift(menu)
+        break
+      }
+    }
+    newMoreMenu.length && setMoreMenu(newMoreMenu)
+  }, [activeMenu1, cache.refs, moreMenu])
+
+  // generate more menu before paint
+  useLayoutEffect(() => {
+    generateMoreMenu()
+  }, [generateMoreMenu])
+
+  useEffect(() => {
+    // trigger more menu generation on resize
+    const onResize = _.debounce(() => setMoreMenu([]), 100)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  const filterNotInMore = menu => !(moreMenu || []).find(x => x.id === menu.id) 
 
   return (
     <div className={cn(styles.themeWrapper, `theme-${theme}`)}>
@@ -227,6 +285,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
               {logo}
             </div>
             {leftNav.map((level1, i) => ([
+              /* Level 1 menu item */
               <a
                 className={cn(styles.primaryLevel1, !activeLevel2Id && level1.id === activeLevel1Id && styles.primaryLevel1Open, level1.mobileOnly && styles.mobileOnly)}
                 href={level1.href}
@@ -236,12 +295,13 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
               >
                 {level1.title}
               </a>,
+              /* Level 2 menu */
               level1.subMenu && (
                 <div
                   className={cn(styles.primaryLevel2Container, level1.id === activeLevel1Id && styles.primaryLevel2ContainerOpen)}
                   key={`level2-${i}-container`}
                 >
-                  {level1.subMenu.map((level2, i) => (
+                  {level1.subMenu.filter(filterNotInMore).map((level2, i) => (
                     <a
                       className={cn(styles.primaryLevel2, level2.id === activeLevel2Id && styles.primaryLevel2Open)}
                       href={level2.href}
@@ -252,8 +312,29 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
                       {level2.title}
                     </a>
                   ))}
+                  {/* The More menu */}
+                  {moreMenu && moreMenu.length > 0 && (
+                    <div className={styles.moreBtnContainer}>
+                      <button
+                        className={cn(styles.primaryLevel2, styles.moreBtn)}
+                        onClick={handleClickMore}
+                        ref={createSetMenuRef(moreId)}
+                      >
+                        <div className={styles.moreBtnMask} />
+                        <span>More</span>
+                        <img src='/img/arrow-small-down.svg' alt='dropdown-icon' />
+                      </button>
+                      <div className={cn(styles.moreContentContainer, showMore && styles.moreContentContainerOpen)}>
+                        {moreMenu.map((menu, i) => (
+                          <a className={styles.primaryLevel2} key={`more-item-${i}`}>
+                            {menu.title}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )
+              ),
             ]))}
             <ChosenArrow show={showChosenArrow} x={chosenArrowX} />
           </div>
