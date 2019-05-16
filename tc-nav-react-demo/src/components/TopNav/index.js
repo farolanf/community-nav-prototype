@@ -204,27 +204,43 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
     // only proceed if more menu is empty
     if (moreMenu && moreMenu.length) return
     if (!activeMenu1 || !activeMenu1.subMenu) return
-    const newMoreMenu = []
-    let prect
-    for (let i = activeMenu1.subMenu.length - 1; i >= 0; i--) {
-      const menu = activeMenu1.subMenu[i]
-      const menuEl = cache.refs[menu.id]
-      if (!menuEl) return
-      const rect = menuEl.getBoundingClientRect()
-      if (!prect) {
-        prect = menuEl.parentElement.getBoundingClientRect()
+    const generateMenu = () => {
+      const newMoreMenu = []
+      let prect
+      for (let i = activeMenu1.subMenu.length - 1; i >= 0; i--) {
+        const menu = activeMenu1.subMenu[i]
+        const menuEl = cache.refs[menu.id]
+        if (!menuEl) return
+        const rect = menuEl.getBoundingClientRect()
+        if (!prect) {
+          prect = menuEl.parentElement.getBoundingClientRect()
+        }
+        // add the item if it's overflowing
+        if (rect.right > prect.right) {
+          newMoreMenu.unshift(menu)
+        } else if (newMoreMenu.length) {
+          // add the last non overflowed item to make sure we have space
+          // for the 'more' menu
+          newMoreMenu.unshift(menu)
+          break
+        }
       }
-      // add the item if it's overflowing
-      if (rect.right > prect.right) {
-        newMoreMenu.unshift(menu)
-      } else if (newMoreMenu.length) {
-        // add the last non overflowed item to make sure we have space
-        // for the 'more' menu
-        newMoreMenu.unshift(menu)
-        break
-      }
+      newMoreMenu.length && setMoreMenu(newMoreMenu)
     }
-    newMoreMenu.length && setMoreMenu(newMoreMenu)
+    const setOverflow = set => {
+      cache.refs.primaryNav.style.overflow = set ? 'hidden' : ''
+      const containers = Object.keys(cache.refs)
+        .filter(key => key.startsWith('level2Container'))
+        .map(key => cache.refs[key])
+      containers.forEach(el => {
+        el.style.overflow = set ? 'hidden' : ''
+      })
+    }
+    setOverflow(true)
+    setTimeout(() => {
+      generateMenu()
+      setOverflow(false)
+    })
   }, [activeMenu1, cache.refs, moreMenu])
 
   // generate more menu before paint
@@ -291,7 +307,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
 
         {/* Primary navigation (level 1 and level 2 menu) */}
         <div className={cn(styles.primaryNavContainer, showLeftMenu && styles.primaryNavContainerOpen)}>
-          <div className={styles.primaryNav}>
+          <div className={styles.primaryNav} ref={createSetMenuRef('primaryNav')}>
             <div
               className={cn(styles.tcLogo, collapsed && styles.tcLogoPush)}
               onClick={handleClickLogo}
@@ -315,6 +331,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
                 <div
                   className={cn(styles.primaryLevel2Container, level1.id === activeLevel1Id && styles.primaryLevel2ContainerOpen)}
                   key={`level2-${i}-container`}
+                  ref={createSetMenuRef(`level2Container${i}`)}
                 >
                   {level1.subMenu.filter(filterNotInMore).map((level2, i) => (
                     <a

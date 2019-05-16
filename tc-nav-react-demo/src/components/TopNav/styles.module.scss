@@ -151,7 +151,10 @@
   align-items: center;
   z-index: 1;
   flex-grow: 1;
-  overflow: hidden;
+
+  .moreInit & {
+    overflow: hidden;
+  }
 
   @include mobile {
     height: 60px;
@@ -233,17 +236,22 @@
 .primaryLevel2Container {
   display: flex;
   white-space: nowrap;
-  overflow: hidden;
   width: 0;
   opacity: 0;
+  overflow: hidden;
 
   @include hide-mobile;
 
   &.primaryLevel2ContainerOpen {
+    overflow: unset;
     margin-right: auto;    
     width: auto;
     opacity: 1;
     transition: opacity 400ms ease-in 100ms;
+  }
+
+  .moreInit & {
+    overflow: hidden;
   }
 }
 
