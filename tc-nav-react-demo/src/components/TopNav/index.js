@@ -3,9 +3,26 @@ import PropTypes from 'prop-types'
 import cn from 'classnames'
 
 import ChosenArrow from '../ChosenArrow'
+import IconSelect from '../IconSelect'
 import styles from './styles.module.scss'
 
 let id = 1
+
+const initMenuId = menu => {
+  return menu
+    .map(level1 => ({
+      ...level1,
+      id: id++,
+      subMenu: level1.subMenu && level1.subMenu.map(level2 => ({
+        ...level2,
+        id: id++,
+        subMenu: level2.subMenu && level2.subMenu.map(level3 => ({
+          ...level3,
+          id: id++
+        }))
+      }))
+    }))
+}
 
 /**
  * TopNav is the main navigation component.
@@ -13,34 +30,38 @@ let id = 1
 const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
   const [cache] = useState({
     refs: {},
-    slide: {}
+    slide: {},
   })
   const [collapsed, setCollapsed] = useState(true)
   const [activeLevel1Id, setActiveLevel1Id] = useState()
   const [activeLevel2Id, setActiveLevel2Id] = useState()
+  /* eslint-disable no-unused-vars */
   const [showLevel3, setShowLevel3] = useState()
 
   const [showChosenArrow, setShowChosenArrow] = useState()
   const [chosenArrowX, setChosenArrowX] = useState()
 
-  const menuWithId = useMemo(() => {
-    return _menu
-      .map(level1 => ({
-        ...level1,
-        id: id++,
-        subMenu: level1.subMenu && level1.subMenu.map(child => ({
-          ...child,
-          id: id++
-        }))
-      }))
-  }, [_menu])
+  const [showIconSelect, setShowIconSelect] = useState()
+  const [iconSelectX, setIconSelectX] = useState()
+
+  const menuWithId = useMemo(() => initMenuId(_menu), [_menu])
 
   const [leftMenu, setLeftMenu] = useState(menuWithId.filter(x => x.pos !== 'right'))
   const [rightMenu] = useState(menuWithId.filter(x => x.pos === 'right'))
-  
+
   const createSetMenuRef = menuId => el => {
     cache.refs[menuId] = el
   }
+
+  const findLevel1Menu = level1Id => leftMenu.find(level1 => level1.id === level1Id)
+
+  const findLevel2Menu = (level1Id, level2Id) => {
+    const menu1 = findLevel1Menu(level1Id)
+    return menu1 && menu1.subMenu && menu1.subMenu.find(level2 => level2.id === level2Id)
+  }
+
+  const activeMenu1 = findLevel1Menu(activeLevel1Id)
+  const activeMenu2 = findLevel2Menu(activeLevel1Id, activeLevel2Id)
 
   const startSlide = () => {
     setLeftMenu(leftMenu => leftMenu.map(menu => {
@@ -54,10 +75,18 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
     }))
   }
 
-  const setChosenArrowPos = menuId => {
+  const getMenuCenter = menuId => {
     const el = cache.refs[menuId]
     const rect = el.getBoundingClientRect()
-    setChosenArrowX(rect.x + rect.width / 2)
+    return rect.x + rect.width / 2
+  }
+
+  const setChosenArrowPos = menuId => {
+    setChosenArrowX(getMenuCenter(menuId))
+  }
+
+  const setIconSelectPos = menuId => {
+    setIconSelectX(getMenuCenter(menuId))
   }
 
   const handleClickLogo = () => {
@@ -77,6 +106,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
     setTimeout(() => {
       setChosenArrowPos(menuId)
       setShowChosenArrow(true)
+      setShowIconSelect(false)
     }, 270)
   }
 
@@ -84,6 +114,18 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
     setActiveLevel2Id(menuId)
     setShowLevel3(true)
     setChosenArrowPos(menuId)
+    // let the level 3 menu mounted first
+    setTimeout(() => {
+      const menu = findLevel2Menu(activeLevel1Id, menuId)
+      if (menu && menu.subMenu) {
+        setIconSelectPos(menu.subMenu[0].id)
+      }
+    })
+    !showIconSelect && setTimeout(() => setShowIconSelect(true), 300)
+  }
+
+  const createHandleClickLevel3 = menuId => () => {
+    setIconSelectPos(menuId)
   }
 
   useLayoutEffect(() => {
@@ -104,14 +146,6 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
       })
     })
   }, [collapsed, leftMenu, cache.refs, cache.slide])
-
-  const activeMenu1 = leftMenu.find(x => x.id === activeLevel1Id)
-
-  const activeMenu2 = activeMenu1
-    && activeMenu1.subMenu
-    && activeMenu1.subMenu.find(x => x.id === activeLevel2Id)
-
-  const activeMenu3 = activeMenu2 && activeMenu2.subMenu
 
   return (
     <div className={cn(styles.themeWrapper, `theme-${theme}`)}>
@@ -168,11 +202,18 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
         </div>
         <div className={cn(styles.secondaryNav, showLevel3 && styles.secondaryNavOpen)}>
           <div className={styles.secondaryNavLinkContainer}>
-            {activeMenu3 && activeMenu3.map((menu, i) => (
-              <a href={menu.href} key={`level3-${i}`}>
-                {menu.title}
+            {activeMenu2 && activeMenu2.subMenu && activeMenu2.subMenu.map((level3, i) => (
+              <a
+                className={styles.secondaryNavItem}
+                href={level3.href}
+                key={`level3-${i}`}
+                onClick={createHandleClickLevel3(level3.id)}
+                ref={createSetMenuRef(level3.id)}
+              >
+                {level3.title}
               </a>
             ))}
+            <IconSelect show={showIconSelect} x={iconSelectX} />
           </div>
         </div>
       </div>

@@ -114,7 +114,7 @@
 
 .secondaryNav {
   display: flex;
-  justify-content: center;
+  justify-content: stretch;
   align-items: center;
   font-size: 13px;
   position: relative;
@@ -141,33 +141,17 @@
 
   .secondaryNavLinkContainer {
     display: flex;
+    flex-grow: 1;
+    justify-content: center;
     align-items: center;
     position: relative;
     height: 30px;
 
-    > a {
-      position: relative;
-      &.isOpen {
+    .secondaryNavItem {
+      cursor: pointer;      
+      
+      &.secondaryNavItemOpen {
         @include Roboto-Bold;
-      }
-    }
-
-    .icon-select {
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      transform: translate3d(34.5px, 0px, 0px);
-      width: 15px;
-      height: 3px;
-      border-radius: 1.5px;
-      background: $turquoise;
-
-      &.isAnimation {
-        -webkit-transition: -webkit-transform 0.5s;
-        transition: transform 0.5s;
-        -webkit-transition-timing-function: cubic-bezier(1, 0.01, 0, 1);
-        -webkit-transition-timing-function: cubic-bezier(1, 0.01, 0, 1.22);
-        transition-timing-function: cubic-bezier(1, 0.01, 0, 1.22);
       }
     }
   }
