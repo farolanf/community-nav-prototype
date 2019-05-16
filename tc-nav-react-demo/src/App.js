@@ -232,7 +232,7 @@ function App() {
     },
     {
       title: 'LOGIN',
-      pos: 'right'
+      rightMenu: true
     }
   ]
 
@@ -248,7 +248,9 @@ function App() {
         theme={theme}
       />
       <div className='help'>
-        <p>Click a level 2 menu to show the level 3 menu then click the following button</p>
+        <h2>Theme support</h2>
+        <p>* Note: Theme example only implemented on the wide version.</p>
+        <p>Click a level 2 menu item to show the level 3 menu then click the following button.</p>
         <button className='theme-btn' onClick={handleClickToggleTheme}>
           Toggle light/dark theme
         </button>

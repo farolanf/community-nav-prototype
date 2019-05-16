@@ -1,14 +1,146 @@
 @import "../../assets/sass/_global/fonts";
 @import "../../assets/sass/_global/themes";
+@import "../../assets/sass/_global/utils";
+
+.mobileOnly {
+  @include mobile-only;
+}
 
 .headerNavUi {
   font-family: "Roboto", Helvetica, Arial, sans-serif;
   color: $gray-90;
   position: relative;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.mobileNav {
+  height: 60px;
+  background: $gray-90;
+  padding: 0 $base-unit * 4 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @include mobile-only;
+
+  .leftMenuContainer {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .menuBtn {
+      @include button-reset;
+      cursor: pointer;
+
+      img {
+        display: block;
+      }
+    }
+  }
+
+  .rightMenu {
+    @include Roboto-Bold;
+    cursor: pointer;
+
+    color: $white;
+    font-size: 16px;
+    line-height: 30px;
+  }
+}
+
+.mobileNavSubMenu {
+  position: absolute;
+  width: 100%;
+  height: 60px;
+  top: 60px;
+  z-index: 1;
+
+  &.mobileNavSubMenuOpen {
+    height: calc(100vh - 60px);
+  }
+
+  @include mobile-only;
+
+  .mobileNavSubMenuMask {
+    z-index: -1;
+    background: $gray-90;
+    opacity: 0.8;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .mobileNavSubMenuHeader {
+    @include button-reset;
+    background: $teal;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    span {
+      @include Barlow-Condensed-SemiBold;
+      color: $white;
+      font-size: 28px;
+      line-height: 40px;
+    }
+
+    img {
+      margin-left: 8px;
+    }
+  }
+
+  .mobileNavSubMenuContent {
+    display: flex;
+    flex-direction: column;
+    padding: $base-unit * 3 $base-unit * 4;
+    background: $teal;
+    border-top: 1px solid $teal-light;
+
+    .mobileNavSubMenuChild {
+      color: $white;
+      font-size: 18px;
+      line-height: 40px;
+      height: 40px;
+      margin: 5px 0;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      &.mobileNavSubMenuChildOpen {
+        @include Roboto-Bold;
+
+        &::before {
+          content: "";
+          height: 30px;
+          width: 3px;
+          border-radius: 1.5px;
+          background: $white;
+          display: inline-block;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
 }
 
 .primaryNavContainer {
   display: flex;
+
+  @include hide-mobile;
+
+  &.primaryNavContainerOpen {
+    display: flex;
+  }
 }
 
 .primaryNav {
@@ -21,6 +153,11 @@
   align-items: center;
   z-index: 1;
   flex-grow: 1;
+
+  @include mobile {
+    height: 60px;
+    justify-content: space-around;
+  }
 }
 
 .primaryNavRight {
@@ -31,11 +168,15 @@
   flex-direction: row;
   align-items: center;
   z-index: 1;
+
+  @include hide-mobile;
 }
 
 .tcLogo {
   margin: 0 50px 0 $base-unit * 6;
   cursor: pointer;
+
+  @include hide-mobile;
 
   &.tcLogoPush {
     margin-right: auto;
@@ -55,6 +196,10 @@
   position: relative;
   cursor: pointer;
 
+  @include screen-md {
+    margin: 0 $base-unit * 4;
+  }
+
   &::before {
     content: "";
     position: absolute;
@@ -64,14 +209,12 @@
     width: 1px;
     height: 100%;
     background: $gray-70;
+
+    @include hide-mobile;
   }
 
   &.primaryLevel1Open {
     color: $turquoise;
-  }
-
-  &.primaryLevel1Right {
-    margin-left: auto;
   }
 }
 
@@ -81,6 +224,8 @@
   overflow: hidden;
   width: 0;
   opacity: 0;
+
+  @include hide-mobile;
 
   &.primaryLevel2ContainerOpen {
     margin-right: auto;    
@@ -123,6 +268,8 @@
   transition: transform 250ms linear;
   transform: translateY(-60px);
 
+  @include hide-mobile;
+
   @include themify($themes) {
     background: themed('secondaryBackgroundColor');
     color: themed('secondaryTextColor');
@@ -152,6 +299,45 @@
       
       &.secondaryNavItemOpen {
         @include Roboto-Bold;
+      }
+    }
+  }
+}
+
+.secondaryNavMobile {
+  display: flex;
+  flex-direction: column;
+  padding: $base-unit * 3 $base-unit * 4;
+  z-index: 1;
+
+  @include themify($themes) {
+    background: themed('secondaryBackgroundColor');
+  }
+
+  .secondaryNavMobileItem {
+    @include themify($themes) {
+      color: themed('secondaryTextColor');
+    }
+
+    font-size: 18px;
+    line-height: 40px;
+    height: 40px;
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &.secondaryNavMobileItemOpen {
+      @include Roboto-Bold;
+
+      &::before {
+        content: "";
+        height: 30px;
+        width: 3px;
+        border-radius: 1.5px;
+        background: $turquoise;
+        display: inline-block;
+        margin-right: 10px;
       }
     }
   }
