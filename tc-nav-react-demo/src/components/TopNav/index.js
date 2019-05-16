@@ -43,6 +43,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
 
   const [showChosenArrow, setShowChosenArrow] = useState()
   const [chosenArrowX, setChosenArrowX] = useState()
+  const [chosenArrowTick, setChosenArrowTick] = useState(0)
 
   const [showIconSelect, setShowIconSelect] = useState()
   const [iconSelectX, setIconSelectX] = useState()
@@ -85,15 +86,15 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
     }))
   }
 
-  const getMenuCenter = menuId => {
+  const getMenuCenter = useCallback(menuId => {
     const el = cache.refs[menuId]
     const rect = el.getBoundingClientRect()
     return rect.x + rect.width / 2
-  }
+  }, [cache.refs])
 
-  const setChosenArrowPos = menuId => {
+  const setChosenArrowPos = useCallback(menuId => {
     setChosenArrowX(getMenuCenter(menuId))
-  }
+  }, [setChosenArrowX, getMenuCenter])
 
   const setIconSelectPos = menuId => {
     setIconSelectX(getMenuCenter(menuId))
@@ -113,12 +114,21 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
     setActiveLevel2Id()
     setShowLevel3(false)
     startSlide()
+    setShowIconSelect(false)
     setTimeout(() => {
-      setChosenArrowPos(menuId)
+      // wait for sliding to end before showing arrow for the first time
       setShowChosenArrow(true)
-      setShowIconSelect(false)
-    }, 270)
+    }, collapsed ? 250 : 0)
+    // trigger useLayoutEffect to set arrow pos, this is necessary because
+    // the other dependencies don't change
+    setChosenArrowTick(x => x + 1)
   }
+
+  useLayoutEffect(() => {
+    // get final menu pos before it slide. Do this before sliding start, or
+    // we'll get incorrect pos
+    activeLevel1Id && setChosenArrowPos(activeLevel1Id)
+  }, [activeLevel1Id, setChosenArrowPos, chosenArrowTick])
 
   const createHandleClickLevel2 = menuId => () => {
     setActiveLevel2Id(menuId)
