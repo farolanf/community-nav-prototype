@@ -128,6 +128,9 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
     setTimeout(() => {
       const menu = findLevel2Menu(activeLevel1Id, menuId)
       if (menu && menu.subMenu) {
+        // select first level 3 item
+        setActiveLevel3Id(menu.subMenu[0].id)
+        // this requires the item element to be mounted first
         setIconSelectPos(menu.subMenu[0].id)
       }
     })
@@ -135,6 +138,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
   }
 
   const createHandleClickLevel3 = menuId => () => {
+    setActiveLevel3Id(menuId)
     setIconSelectPos(menuId)
   }
 
@@ -354,7 +358,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
           <div className={styles.secondaryNavLinkContainer}>
             {activeMenu2 && activeMenu2.subMenu && activeMenu2.subMenu.map((level3, i) => (
               <a
-                className={styles.secondaryNavItem}
+                className={cn(styles.secondaryNavItem, level3.id === activeLevel3Id && styles.secondaryNavItemOpen)}
                 href={level3.href}
                 key={`level3-${i}`}
                 onClick={createHandleClickLevel3(level3.id)}
