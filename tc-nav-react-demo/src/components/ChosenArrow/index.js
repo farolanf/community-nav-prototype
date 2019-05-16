@@ -1,8 +1,13 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styles from './styles.module.scss'
 
-const ChosenArrow = ({ theme }) => (
-  <div className={styles.chosenArrow}>
+const ChosenArrow = ({ show, x }) => (
+  <div
+    className={styles.chosenArrow}
+    style={{ transform: `translateX(calc(${x}px - 50%))` }}
+    hidden={!show}
+  >
     <svg width="40px" height="10px" viewBox="0 0 40 10">
         {/* Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch */}
         <g id="Page-1" stroke="none" strokeWidth="1" fillRule="evenodd">
@@ -13,5 +18,12 @@ const ChosenArrow = ({ theme }) => (
     </svg>
   </div>
 )
+
+ChosenArrow.propTypes = {
+  /** Show or hide the arrow */
+  show: PropTypes.bool,
+  /** The x position of the arrow. Generally this will be the center of the target */
+  x: PropTypes.number
+}
 
 export default ChosenArrow
