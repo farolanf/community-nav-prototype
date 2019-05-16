@@ -190,6 +190,19 @@
   }
 }
 
+.primaryLevel1Separator {
+  display: block;
+  height: 30px;
+  width: 1px;
+  background: $gray-70;
+
+  @include mobile-only;
+
+  &:first-of-type {
+    display: none;
+  }
+}
+
 .primaryLevel1 {
   @include Roboto-Bold;
   font-size: 18px;
