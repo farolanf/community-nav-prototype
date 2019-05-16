@@ -20,6 +20,9 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
   const [activeLevel2Id, setActiveLevel2Id] = useState()
   const [showLevel3, setShowLevel3] = useState()
 
+  const [showChosenArrow, setShowChosenArrow] = useState()
+  const [chosenArrowX, setChosenArrowX] = useState()
+
   const menuWithId = useMemo(() => {
     return _menu
       .map(level1 => ({
@@ -35,7 +38,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
   const [leftMenu, setLeftMenu] = useState(menuWithId.filter(x => x.pos !== 'right'))
   const [rightMenu] = useState(menuWithId.filter(x => x.pos === 'right'))
   
-  const createSetLevel1Ref = menuId => el => {
+  const createSetMenuRef = menuId => el => {
     cache.refs[menuId] = el
   }
 
@@ -46,29 +49,41 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
       const rect = el.getBoundingClientRect()
       return {
         ...menu,
-        initialX: rect.x,
+        initialX: rect.x
       }
     }))
   }
 
+  const setChosenArrowPos = menuId => {
+    const el = cache.refs[menuId]
+    const rect = el.getBoundingClientRect()
+    setChosenArrowX(rect.x + rect.width / 2)
+  }
+
   const handleClickLogo = () => {
     setCollapsed(true)
-    startSlide()
     setActiveLevel1Id()
     setShowLevel3(false)
+    setShowChosenArrow(false)
+    startSlide()
   }
 
   const createHandleClickLevel1 = menuId => () => {
     setCollapsed(false)
-    startSlide()
     setActiveLevel1Id(menuId)
     setActiveLevel2Id()
     setShowLevel3(false)
+    startSlide()
+    setTimeout(() => {
+      setChosenArrowPos(menuId)
+      setShowChosenArrow(true)
+    }, 270)
   }
 
   const createHandleClickLevel2 = menuId => () => {
     setActiveLevel2Id(menuId)
     setShowLevel3(true)
+    setChosenArrowPos(menuId)
   }
 
   useLayoutEffect(() => {
@@ -88,7 +103,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
         }, 250);
       })
     })
-  }, [leftMenu, cache.refs, cache.slide])
+  }, [collapsed, leftMenu, cache.refs, cache.slide])
 
   const activeMenu1 = leftMenu.find(x => x.id === activeLevel1Id)
 
@@ -115,7 +130,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
                 href={level1.href}
                 key={`level1-${i}`}
                 onClick={createHandleClickLevel1(level1.id)}
-                ref={createSetLevel1Ref(level1.id)}
+                ref={createSetMenuRef(level1.id)}
               >
                 {level1.title}
               </a>,
@@ -130,6 +145,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
                       href={level2.href}
                       key={`level2-${i}`}
                       onClick={createHandleClickLevel2(level2.id)}
+                      ref={createSetMenuRef(level2.id)}
                     >
                       {level2.title}
                     </a>
@@ -137,7 +153,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
                 </div>
               )
             ]))}
-            <ChosenArrow />
+            <ChosenArrow show={showChosenArrow} x={chosenArrowX} />
           </div>
           <div className={styles.primaryNavRight}>
             {rightMenu.map((level1, i) => (
