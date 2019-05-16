@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react'
 import TopNav from './components/TopNav'
 import './app.css'
 
@@ -152,14 +152,26 @@ function App() {
       pos: 'right'
     }
   ]
+
+  const [theme, setTheme] = useState('light')
+
+  const handleClickToggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light') 
+
   return (
-    <div className='App'>
+    <div>
       <TopNav
         menu={navMenus}
         logo={<img src='/img/tc-logo.svg' alt='logo' />}
+        theme={theme}
       />
+      <div className='help'>
+        <p>Click a level 2 menu to show the level 3 menu then click the following button</p>
+        <button className='theme-btn' onClick={handleClickToggleTheme}>
+          Toggle light/dark theme
+        </button>
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
