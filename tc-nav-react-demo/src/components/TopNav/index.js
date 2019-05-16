@@ -35,7 +35,6 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
   const [collapsed, setCollapsed] = useState(true)
   const [activeLevel1Id, setActiveLevel1Id] = useState()
   const [activeLevel2Id, setActiveLevel2Id] = useState()
-  /* eslint-disable no-unused-vars */
   const [showLevel3, setShowLevel3] = useState()
 
   const [showChosenArrow, setShowChosenArrow] = useState()
@@ -60,11 +59,11 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
     return menu1 && menu1.subMenu && menu1.subMenu.find(level2 => level2.id === level2Id)
   }
 
-  const activeMenu1 = findLevel1Menu(activeLevel1Id)
   const activeMenu2 = findLevel2Menu(activeLevel1Id, activeLevel2Id)
 
   const startSlide = () => {
     setLeftMenu(leftMenu => leftMenu.map(menu => {
+      if (!cache.refs[menu.id]) return menu
       cache.slide[menu.id] = true
       const el = cache.refs[menu.id]
       const rect = el.getBoundingClientRect()
@@ -130,7 +129,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
 
   useLayoutEffect(() => {
     leftMenu.forEach(menu => {
-      if (!cache.slide[menu.id]) return
+      if (!cache.slide[menu.id] || !cache.refs[menu.id]) return
       cache.slide[menu.id] = false
       const el = cache.refs[menu.id]
       const rect = el.getBoundingClientRect()
@@ -158,7 +157,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
             >
               {logo}
             </div>
-            {leftMenu.map((level1, i) => ([
+            {leftMenu.filter(x => !x.mobileOnly).map((level1, i) => ([
               <a
                 className={cn(styles.primaryLevel1, !activeLevel2Id && level1.id === activeLevel1Id && styles.primaryLevel1Open)}
                 href={level1.href}

@@ -148,6 +148,89 @@ function App() {
       ]
     },
     {
+      title: 'MORE',
+      mobileOnly: true,
+      subMenu: [
+        {
+          title: "About Topcoder",
+          subMenu: [
+            { title: "Overview" },
+            { title: "Work List" },
+            { title: "Stats" },
+            { title: "Problem archive" },
+            { title: "Learn" },
+            { title: "Topcoder Open" },
+          ]
+        },
+        {
+          title: "Contact Us",
+          subMenu: [
+            { title: "Overview" },
+            { title: "Work List" },
+            { title: "Stats" },
+            { title: "Problem archive" },
+            { title: "Learn" },
+            { title: "Topcoder Open" },
+          ]
+        },
+        {
+          title: "Carreers",
+          subMenu: [
+            { title: "Overview" },
+            { title: "Work List" },
+            { title: "Stats" },
+            { title: "Problem archive" },
+            { title: "Learn" },
+            { title: "Topcoder Open" },
+          ]
+        },
+        {
+          title: "Terms & Conditions",
+          subMenu: [
+            { title: "Overview" },
+            { title: "Work List" },
+            { title: "Stats" },
+            { title: "Problem archive" },
+            { title: "Learn" },
+            { title: "Topcoder Open" },
+          ]
+        },
+        {
+          title: "Social",
+          subMenu: [
+            { title: "Overview" },
+            { title: "Work List" },
+            { title: "Stats" },
+            { title: "Problem archive" },
+            { title: "Learn" },
+            { title: "Topcoder Open" },
+          ]
+        },
+        {
+          title: "Press Kits",
+          subMenu: [
+            { title: "Overview" },
+            { title: "Work List" },
+            { title: "Stats" },
+            { title: "Problem archive" },
+            { title: "Learn" },
+            { title: "Topcoder Open" },
+          ]
+        },
+        {
+          title: "Partner Programs",
+          subMenu: [
+            { title: "Overview" },
+            { title: "Work List" },
+            { title: "Stats" },
+            { title: "Problem archive" },
+            { title: "Learn" },
+            { title: "Topcoder Open" },
+          ]
+        },
+      ]
+    },
+    {
       title: 'LOGIN',
       pos: 'right'
     }
