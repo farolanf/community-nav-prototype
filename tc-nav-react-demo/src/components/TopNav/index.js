@@ -7,6 +7,10 @@ import ChosenArrow from '../ChosenArrow'
 import IconSelect from '../IconSelect'
 import styles from './styles.module.scss'
 
+import MobileNav from './MobileNav';
+import MobileSubNav from './MobileSubNav';
+import MobileMenu from './MobileMenu';
+
 const moreId = 'more'
 
 let id = 1
@@ -283,47 +287,22 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
       <div className={styles.headerNavUi}>
 
         {/* The top mobile navigation */}
-        <div className={styles.mobileNav}>
-          <div className={styles.leftMenuContainer}>
-            <button className={styles.menuBtn} onClick={handleClickLeftMenu}>
-              {showLeftMenu ? (
-                <img src='/img/icon-close.svg' alt='close' />
-              ) : (
-                <img src='/img/icon-menu.svg' width='20' alt='menu' />
-              )}
-            </button>
-          </div>
-          {logo}
-          {rightMenu && (
-            <div className={styles.rightMenu}>
-              {rightMenu.title}
-            </div>
-          )}
-        </div>
+        <MobileNav
+          showLeftMenu={showLeftMenu}
+          logo={logo}
+          rightMenu={rightMenu}
+          onClickLeftMenu={handleClickLeftMenu}
+        />
 
         {/* Mobile sub navigation (active level 2 menu) */}
         {!showLeftMenu && activeMenu2 && (
-          <div className={cn(styles.mobileNavSubMenu, showMobileSubMenu && styles.mobileNavSubMenuOpen)}>
-            {showMobileSubMenu && <div className={styles.mobileNavSubMenuMask} />}
-            <button className={styles.mobileNavSubMenuHeader} onClick={handleClickSubMenu}>
-              <span>{activeMenu2.title}</span>
-              <img src="/img/arrow-small-down.svg" alt="dropdown icon" />
-            </button>
-            {showMobileSubMenu && (
-              <div className={styles.mobileNavSubMenuContent}>
-                {activeMenu2.subMenu && activeMenu2.subMenu.map((level3, i) => (
-                  <a
-                    className={cn(styles.mobileNavSubMenuChild, level3.id === activeLevel3Id && styles.mobileNavSubMenuChildOpen)}
-                    href={level3.href}
-                    key={`level3-${i}`}
-                    onClick={createHandleClickLevel3Mobile(level3.id)}
-                  >
-                    {level3.title}
-                  </a>
-                ))}
-              </div>
-            )}
-          </div>
+          <MobileSubNav
+            open={showMobileSubMenu}
+            menu={activeMenu2}
+            activeChildId={activeLevel3Id}
+            onClick={handleClickSubMenu}
+            createHandleClickItem={createHandleClickLevel3Mobile}
+          />
         )}
 
         {/* Primary navigation (level 1 and level 2 menu) */}
@@ -426,18 +405,11 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
 
         {/* Mobile level 2 menu */}
         {showLeftMenu && activeMenu1 && (
-          <div className={styles.secondaryNavMobile}>
-            {activeMenu1.subMenu && activeMenu1.subMenu.map((level2, i) => (
-              <a
-                className={cn(styles.secondaryNavMobileItem, level2.id === activeLevel2Id && styles.secondaryNavMobileItemOpen)}
-                href={level2.href}
-                key={`level2-${i}`}
-                onClick={createHandleClickLevel2Mobile(level2.id)}
-              >
-                {level2.title}
-              </a>
-            ))}
-          </div>
+          <MobileMenu
+            menu={activeMenu1}
+            activeChildId={activeLevel2Id}
+            createHandleClickItem={createHandleClickLevel2Mobile}
+          />
         )}
 
       </div>
