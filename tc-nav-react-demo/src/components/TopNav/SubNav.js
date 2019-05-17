@@ -1,7 +1,7 @@
 import React from 'react'
 import cn from 'classnames'
 import IconSelect from '../IconSelect'
-import styles from './styles.module.scss'
+import styles from './SubNav.module.scss'
 
 const SubNav = ({
   open,

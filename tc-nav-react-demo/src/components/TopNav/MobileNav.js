@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './styles.module.scss'
+import styles from './MobileNav.module.scss'
 
 const MobileNav = ({ showLeftMenu, onClickLeftMenu, logo, rightMenu }) => (
   <div className={styles.mobileNav}>

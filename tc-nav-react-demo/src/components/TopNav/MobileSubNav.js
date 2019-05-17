@@ -1,6 +1,6 @@
 import React from 'react'
 import cn from 'classnames'
-import styles from './styles.module.scss'
+import styles from './MobileSubNav.module.scss'
 
 const MobileSubNav = ({ open, menu, activeChildId, onClick, createHandleClickItem }) => (
   <div

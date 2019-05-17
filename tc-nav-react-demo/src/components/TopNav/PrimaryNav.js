@@ -1,7 +1,7 @@
 import React from 'react'
 import cn from 'classnames'
 import ChosenArrow from '../ChosenArrow'
-import styles from './styles.module.scss'
+import styles from './PrimaryNav.module.scss'
 
 const PrimaryNav = ({
   collapsed,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import cn from 'classnames'
 import _ from 'lodash'
 
-import styles from './styles.module.scss'
+import styles from './index.module.scss'
 
 import MobileNav from './MobileNav';
 import MobileSubNav from './MobileSubNav';

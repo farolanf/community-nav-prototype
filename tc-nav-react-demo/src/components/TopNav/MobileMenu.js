@@ -1,6 +1,6 @@
 import React from 'react'
 import cn from 'classnames'
-import styles from './styles.module.scss'
+import styles from './MobileMenu.module.scss'
 
 const MobileMenu = ({ menu, activeChildId, createHandleClickItem }) => (
   <div className={styles.secondaryNavMobile}>
