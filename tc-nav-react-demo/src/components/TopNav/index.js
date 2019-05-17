@@ -34,7 +34,7 @@ const initMenuId = menu => {
 /**
  * TopNav is the main navigation component.
  */
-const TopNav = ({ menu: _menu, logo, theme }) => {
+const TopNav = ({ menu: _menu, rightMenu, logo, theme }) => {
   const [cache] = useState({
     refs: {},
     slide: {},
@@ -54,8 +54,7 @@ const TopNav = ({ menu: _menu, logo, theme }) => {
 
   const menuWithId = useMemo(() => initMenuId(_menu), [_menu])
 
-  const [leftNav, setLeftNav] = useState(menuWithId.filter(x => !x.rightMenu))
-  const [rightMenu] = useState(menuWithId.find(x => x.rightMenu))
+  const [leftNav, setLeftNav] = useState(menuWithId)
 
   const [showLeftMenu, setShowLeftMenu] = useState()
   const [showMobileSubMenu, setShowMobileSubMenu] = useState()
@@ -369,6 +368,8 @@ TopNav.propTypes = {
    *   - subMenu {array} Children menu
    */
   menu: PropTypes.array.isRequired,
+
+  rightMenu: PropTypes.node,
   
   logo: PropTypes.node,
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import TopNav from './components/TopNav'
+import LoginNav from './components/LoginNav'
 import './app.css'
 
 function App() {
@@ -229,21 +230,33 @@ function App() {
           ]
         },
       ]
-    },
-    {
-      title: 'LOGIN',
-      rightMenu: true
     }
   ]
 
   const [theme, setTheme] = useState('light')
+  const [loggedIn, setLoggedIn] = useState()
+  const [notificationState, setNotificationState] = useState('new')
 
   const handleClickToggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light') 
+
+  const handleClickLogin = () => setLoggedIn(x => !x)
+
+  const handleChangeNotificationState = () => {
+    setNotificationState(x => x === 'none' ? 'new' : x === 'new' ? 'seen' : 'none')
+  }
 
   return (
     <div>
       <TopNav
         menu={navMenus}
+        rightMenu={(
+          <LoginNav
+            loggedIn={loggedIn}
+            username='vic-tor'
+            notificationButtonState={notificationState}
+            onClickLogin={handleClickLogin}
+          />
+        )}
         logo={<img src='/img/tc-logo.svg' alt='logo' />}
         theme={theme}
       />
@@ -251,9 +264,12 @@ function App() {
         <h2>Theme support</h2>
         <p>* Note: Theme example only implemented on the wide version.</p>
         <p>Click a level 2 menu item to show the level 3 menu then click the following button.</p>
-        <button className='theme-btn' onClick={handleClickToggleTheme}>
+        <button onClick={handleClickToggleTheme}>
           Toggle light/dark theme
         </button>
+
+        <h2>Notifications</h2>
+        <button onClick={handleChangeNotificationState}>Change notification state</button>
       </div>
     </div>
   )

@@ -99,7 +99,7 @@ const PrimaryNav = ({
       <div className={styles.primaryNavRight}>
         {rightMenu && (
           <div className={styles.primaryLevel1}>
-            {rightMenu.title}
+            {rightMenu}
           </div>
         )}
       </div>
