@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-import { TopNav, LoginNav } from 'tc-nav-react'
+import TopNav from './components/TopNav'
+import LoginNav from './components/LoginNav'
 import './app.css'
 
 function App() {
   var navMenus = [
     {
+      id: 'business', // required for 'Switch to BUSINESS' to work
       title: 'BUSINESS',
       subMenu: [
         {
@@ -88,6 +90,7 @@ function App() {
       ]
     },
     {
+      id: 'work', // required for 'Switch to BUSINESS' to work
       title: 'WORK',
       subMenu: [
         {
@@ -235,6 +238,8 @@ function App() {
   const [theme, setTheme] = useState('light')
   const [loggedIn, setLoggedIn] = useState()
   const [notificationState, setNotificationState] = useState('new')
+  const [activeLevel1Id, setActiveLevel1Id] = useState()
+  const [switchText, setSwitchText] = useState('Switch to BUSINESS')
 
   const handleClickToggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light') 
 
@@ -244,6 +249,15 @@ function App() {
 
   const handleChangeNotificationState = () => {
     setNotificationState(x => x === 'none' ? 'new' : x === 'new' ? 'seen' : 'none')
+  }
+
+  const handleChangeLevel1Id = menuId => {
+    setActiveLevel1Id(menuId)
+    setSwitchText('Switch to ' + (menuId === 'business' ? 'WORK' : 'BUSINESS'))
+  }
+
+  const handleSwitchMenu = () => {
+    setActiveLevel1Id(x => x === 'business' ? 'work' : 'business')
   }
 
   return (
@@ -265,10 +279,14 @@ function App() {
               { title: 'About Topcoder', },
               { title: 'Log Out', onClick: handleClickLogout },
             ]}
+            switchText={switchText}
+            onSwitch={handleSwitchMenu}
           />
         )}
         logo={<img src='/img/tc-logo.svg' alt='logo' />}
         theme={theme}
+        currentLevel1Id={activeLevel1Id}
+        onChangeLevel1Id={handleChangeLevel1Id}
       />
       <div className='help'>
         <h2>Theme support</h2>
