@@ -267,6 +267,7 @@ function App() {
         rightMenu={(
           <LoginNav
             loggedIn={loggedIn}
+            avatarSrc='/img/img-vic-tor-avatar.svg'
             username='vic-tor'
             notificationButtonState={notificationState}
             onClickLogin={handleClickLogin}

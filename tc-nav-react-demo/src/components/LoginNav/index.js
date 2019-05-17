@@ -9,6 +9,7 @@ import AccountMenu from '../AccountMenu';
 
 const LoginNav = ({
   loggedIn,
+  avatarSrc,
   username,
   notificationButtonState,
   accountMenu,
@@ -34,6 +35,7 @@ const LoginNav = ({
           key='notification-button'
         />,
         <UserInfo
+          avatarSrc={avatarSrc}
           username={username}
           newNotifications={notificationButtonState === 'new'}
           onClick={handleClickUserInfo}
@@ -59,6 +61,7 @@ const LoginNav = ({
 
 LoginNav.propTypes = {
   loggedIn: PropTypes.bool,
+  avatarSrc: PropTypes.string,
   username: PropTypes.node,
   accountMenu: PropTypes.array,
   switchText: PropTypes.string,
