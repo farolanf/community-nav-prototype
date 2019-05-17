@@ -10,7 +10,8 @@ const PrimaryNav = ({
   menu,
   rightMenu,
   moreMenu,
-  showMore,
+  openMore,
+  onCloseMore,
   moreId,
   activeLevel1Id,
   activeLevel2Id,
@@ -66,7 +67,8 @@ const PrimaryNav = ({
               ))}
               {/* The More menu */}
               {level1.id === activeLevel1Id && moreMenu && moreMenu.length > 0 && (
-                <div className={cn(styles.moreBtnContainer, showMore && styles.moreOpen)}>
+                <div className={cn(styles.moreBtnContainer, openMore && styles.moreOpen)}>
+                  <div className={styles.backdrop} onClick={onCloseMore} />
                   <button
                     className={cn(styles.primaryLevel2, styles.moreBtn)}
                     onClick={handleClickMore}

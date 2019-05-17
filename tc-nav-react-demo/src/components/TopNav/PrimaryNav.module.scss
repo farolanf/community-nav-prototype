@@ -211,6 +211,8 @@
   }
 
   &.moreOpen {
+    @include backdrop;
+
     .moreContentContainer {
       display: flex;
     }
