@@ -1,0 +1,269 @@
+@import "../../assets/sass/_global/fonts";
+@import "../../assets/sass/_global/variables";
+@import "../../assets/sass/_global/common_ui";
+
+.notificationsPanel {
+  background-color: $white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 35px 5px rgba(21, 21, 22, 0.1), 0 10px 14px 0 rgba(21, 21, 22, 0.3);
+  width: 480px;
+  height: auto;
+  z-index: 100;
+  .notiHeader {
+    background-color: $turquoise-dark;
+    border-radius: 10px 10px 0 0;
+    padding: 10px 20px 10px;
+    height: 30px;
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .leftNoti {
+      background: url(#{$img-path}/icon-bell.svg) left center no-repeat;
+      background-size: 16px;
+      padding-left: 26px;
+      color: $white;
+      font-size: 16px;
+      @include Roboto-Bold;
+      text-align: left;
+    }
+    .rights {
+      .whiteLink {
+        color: $white;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 12px;
+        @include Roboto-Bold;
+        text-align: right;
+        &:hover {
+          opacity: 0.75;
+        }
+      }
+
+      .point {
+        width: 3px;
+        height: 3px;
+        background-color: $white;
+        border-radius: 100%;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+  }
+  .notiBody {
+    max-height: 378px;
+    overflow: scroll;
+    text-align: center;
+    .iconBell {
+      background: url(#{$img-path}/bell-big.svg)center center no-repeat;
+      background-size: 73px 80px;
+      width: 73px;
+      height: 80px;
+      margin: 50px 0 10px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .titles {
+      color: $gray-90;
+      font-size: 30px;
+      @include Barlow-Condensed-SemiBold;
+      line-height: 40px;
+      margin: 23px 0 -8px 0;
+    }
+    .txt {
+      text-align: center;
+      padding: 19px 60px 12px 60px;
+      margin: 0;
+      color: $gray-90;
+      font-size: 14px;
+      @include Roboto-Regular;
+      line-height: 20px;
+      .blueLink {
+        color: $blue;
+        font-size: 14px;
+      }
+    }
+    .light-bar {
+      background-color: $green-light;
+      height: 28px;
+      color: $green-dark;
+      font-size: 14px;
+      @include Roboto-Bold;
+      line-height: 28px;
+      padding-left: 20px;
+      margin-top: -2px;
+      position: sticky;
+      position: -webkit-sticky;
+      top: 0;
+      z-index: 2;
+      padding-right: 20px;
+      padding-top: 2px;
+    }
+    .greybar-section {
+      &:last-child {
+        .items {
+          .item-content {
+            border-bottom: 0;
+          }
+        }
+      }
+    }
+    .lightblue-section,
+    .greybar-section {
+      margin-top: -2px;
+      background-color: $white;
+      padding-top: 5px;
+    }
+    .right-remove {
+      position: absolute;
+      right: 1px;
+      top: 50%;
+      margin-top: -10px;
+      z-index: 666;
+      display: none;
+      .btn-close {
+        display: block;
+        background: url(#{$img-path}/e-remove.svg) center center no-repeat;
+        background-size: 10px;
+        width: 20px;
+        height: 20px;
+        &:hover {
+          background: url(#{$img-path}/delete-small.svg) center center no-repeat;
+        }
+      }
+      .black-txt {
+        position: absolute;
+        top: -28px;
+        left: -76px;
+        background-color: $gray-90;
+        border-radius: 2px;
+        padding: 6px 0;
+        color: $white;
+        font-size: 11px;
+        @include Roboto-Regular;
+        line-height: 13px;
+        text-align: center;
+        min-width: 110px;
+        display: none;
+        &:after {
+          content: '';
+          display: block;
+          position: absolute;
+          bottom: -5px;
+          left: calc(50% + 30px);
+          margin-left: -3px;
+          width: 0;
+          height: 0;
+          border-left: 4px solid transparent;
+          border-right: 4px solid transparent;
+          border-top: 5px solid $gray-90;
+        }
+      }
+      &:hover {
+        .black-txt {
+          display: block;
+        }
+      }
+    }
+    .items {
+      padding: 0 30px;
+      &:hover {
+        background-color: $gray-neutral-light;
+        .right-remove {
+          display: block;
+        }
+      }
+      .item-content {
+        display: block;
+        padding: 10px 0;
+        border-bottom: 1px solid $gray-02;
+        position: relative;
+        .txt {
+          padding-right: 30px;
+        }
+      }
+      .bottom-info {
+        margin-top: 5px;
+        line-height: 20px;
+        font-size: 12px;
+        .blue-squre {
+          padding: 0px 10px;
+          display: inline-block;
+          margin-right: 6px;
+          background-color: $blue-btn;
+          border-radius: 5px;
+          color: $white;
+          @include Roboto-Regular;
+          line-height: 20px;
+        }
+        .time-txt {
+          display: inline-block;
+          vertical-align: middle;
+          color: $gray-03;
+          font-size: 12px;
+          @include Roboto-Regular;
+          line-height: 20px;
+        }
+      }
+    }
+    .grey-bar {
+      background-color: $gray-04;
+      height: 50px;
+      padding-left: 20px;
+      margin-top: -4px;
+      z-index: 1;
+      position: relative;
+      .copyicon-title {
+        padding-left: 26px;
+        background: url(#{$img-path}/group.svg) left center no-repeat;
+        background-size: 15px;
+        color: $gray-90;
+        font-size: 14px;
+        @include Roboto-Bold;
+        width: calc(100% - 70px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .right-remove {
+        right: 20px;
+      }
+      &:hover {
+        .right-remove {
+          display: block;
+        }
+      }
+    }
+  }
+  .notiFooter {
+    text-align: center;
+    padding: 15px 0 45px 0;
+  }
+  .end-message {
+    background-color: $gray-neutral-light;
+    border-radius: 0 0 10px 10px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    color: $gray-50;
+    font-size: 12px;
+    @include Roboto-Regular;
+    line-height: 40px;
+    justify-content: center;
+    position: relative;
+    z-index: 10;
+    margin-top: -3px;
+  }
+}
+
+.notificationsPanel {
+  max-height: 70vh;
+  flex-direction: column;
+
+  .notiBody {
+    flex: 1;
+    max-height: none;
+  }
+}

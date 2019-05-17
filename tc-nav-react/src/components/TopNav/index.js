@@ -34,7 +34,7 @@ const initMenuId = menu => {
 /**
  * TopNav is the main navigation component.
  */
-const TopNav = ({ menu: _menu, logo, theme }) => {
+const TopNav = ({ menu: _menu, rightMenu, logo, theme }) => {
   const [cache] = useState({
     refs: {},
     slide: {},
@@ -54,8 +54,7 @@ const TopNav = ({ menu: _menu, logo, theme }) => {
 
   const menuWithId = useMemo(() => initMenuId(_menu), [_menu])
 
-  const [leftNav, setLeftNav] = useState(menuWithId.filter(x => !x.rightMenu))
-  const [rightMenu] = useState(menuWithId.find(x => x.rightMenu))
+  const [leftNav, setLeftNav] = useState(menuWithId)
 
   const [showLeftMenu, setShowLeftMenu] = useState()
   const [showMobileSubMenu, setShowMobileSubMenu] = useState()
@@ -156,7 +155,8 @@ const TopNav = ({ menu: _menu, logo, theme }) => {
     setIconSelectPos(menuId)
   }
 
-  const handleClickMore = () => {
+  const handleClickMore = e => {
+    e.preventDefault()
     setShowMore(x => !x)
   }
 
@@ -176,11 +176,6 @@ const TopNav = ({ menu: _menu, logo, theme }) => {
     })
     !showIconSelect && setTimeout(() => setShowIconSelect(true), 300)
   }
-
-  // hide more menu if any item clicked
-  useLayoutEffect(() => {
-    setShowMore(false)
-  }, [activeLevel1Id, activeLevel2Id, activeLevel3Id])
 
   const handleClickLeftMenu = () => setShowLeftMenu(x => !x)
 
@@ -281,6 +276,15 @@ const TopNav = ({ menu: _menu, logo, theme }) => {
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
+  useEffect(() => {
+    // handle click outside
+    const onClick = e => {
+      !e.defaultPrevented && setShowMore(false)
+    }
+    document.addEventListener('click', onClick)
+    return () => document.removeEventListener('click', onClick)
+  }, [])
+
   return (
     <div className={cn(styles.themeWrapper, `theme-${theme}`)}>
       <div className={styles.headerNavUi}>
@@ -364,6 +368,8 @@ TopNav.propTypes = {
    *   - subMenu {array} Children menu
    */
   menu: PropTypes.array.isRequired,
+
+  rightMenu: PropTypes.node,
   
   logo: PropTypes.node,
 
