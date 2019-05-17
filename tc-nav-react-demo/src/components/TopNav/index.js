@@ -63,8 +63,8 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
   const [moreMenu, setMoreMenu] = useState()
   const [showMore, setShowMore] = useState()
 
-  const createSetMenuRef = menuId => el => {
-    cache.refs[menuId] = el
+  const createSetRef = id => el => {
+    cache.refs[id] = el
   }
 
   const findLevel1Menu = level1Id => leftNav.find(level1 => level1.id === level1Id)
@@ -307,7 +307,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
 
         {/* Primary navigation (level 1 and level 2 menu) */}
         <div className={cn(styles.primaryNavContainer, showLeftMenu && styles.primaryNavContainerOpen)}>
-          <div className={styles.primaryNav} ref={createSetMenuRef('primaryNav')}>
+          <div className={styles.primaryNav} ref={createSetRef('primaryNav')}>
             <div
               className={cn(styles.tcLogo, collapsed && styles.tcLogoPush)}
               onClick={handleClickLogo}
@@ -322,7 +322,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
                 href={level1.href}
                 key={`level1-${i}`}
                 onClick={createHandleClickLevel1(level1.id)}
-                ref={createSetMenuRef(level1.id)}
+                ref={createSetRef(level1.id)}
               >
                 {level1.title}
               </a>,
@@ -331,7 +331,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
                 <div
                   className={cn(styles.primaryLevel2Container, level1.id === activeLevel1Id && styles.primaryLevel2ContainerOpen)}
                   key={`level2-${i}-container`}
-                  ref={createSetMenuRef(`level2Container${i}`)}
+                  ref={createSetRef(`level2Container${i}`)}
                 >
                   {level1.subMenu.filter(filterNotInMore).map((level2, i) => (
                     <a
@@ -339,7 +339,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
                       href={level2.href}
                       key={`level2-${i}`}
                       onClick={createHandleClickLevel2(level2.id)}
-                      ref={createSetMenuRef(level2.id)}
+                      ref={createSetRef(level2.id)}
                     >
                       {level2.title}
                     </a>
@@ -350,7 +350,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
                       <button
                         className={cn(styles.primaryLevel2, styles.moreBtn)}
                         onClick={handleClickMore}
-                        ref={createSetMenuRef(moreId)}
+                        ref={createSetRef(moreId)}
                       >
                         <div className={styles.moreBtnMask} />
                         <span>More</span>
@@ -393,7 +393,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
           showIndicator={showIconSelect}
           indicatorX={iconSelectX}
           createHandleClickItem={createHandleClickLevel3}
-          createSetRef={createSetMenuRef}
+          createSetRef={createSetRef}
         />
 
         {/* Mobile level 2 menu */}
