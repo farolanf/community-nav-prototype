@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import TopNav from './components/TopNav'
-import LoginNav from './components/LoginNav'
+import { TopNav, LoginNav } from 'tc-nav-react'
 import './app.css'
 
 function App() {

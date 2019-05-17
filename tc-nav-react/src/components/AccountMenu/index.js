@@ -25,9 +25,17 @@ const AccountMenu = ({ open, onClose, avatarSrc, username, email, menu, switchTe
         <span>{switchText}</span>
       </div>
       <div className={styles.menu}>
-        {menu.map(item => (
-          item.separator ? <span className={styles.separator} /> : (
-            <a href={item.href} onClick={handleClickItem(item)}>{item.title}</a>
+        {menu.map((item, i) => (
+          item.separator ? (
+            <span className={styles.separator} key={`separator-${i}`} />
+          ) : (
+            <a
+              href={item.href}
+              key={`item-${i}`}
+              onClick={handleClickItem(item)}
+            >
+              {item.title}
+            </a>
           )
         ))}
       </div>

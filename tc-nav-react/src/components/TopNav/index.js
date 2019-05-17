@@ -19,13 +19,13 @@ const initMenuId = menu => {
   return menu
     .map(level1 => ({
       ...level1,
-      id: id++,
+      id: level1.id || id++,
       subMenu: level1.subMenu && level1.subMenu.map(level2 => ({
         ...level2,
-        id: id++,
+        id: level2.id || id++,
         subMenu: level2.subMenu && level2.subMenu.map(level3 => ({
           ...level3,
-          id: id++
+          id: level3.id || id++
         }))
       }))
     }))
@@ -34,7 +34,14 @@ const initMenuId = menu => {
 /**
  * TopNav is the main navigation component.
  */
-const TopNav = ({ menu: _menu, rightMenu, logo, theme }) => {
+const TopNav = ({
+  menu: _menu,
+  rightMenu,
+  logo,
+  theme,
+  currentLevel1Id,
+  onChangeLevel1Id
+}) => {
   const [cache] = useState({
     refs: {},
     slide: {},
@@ -76,7 +83,7 @@ const TopNav = ({ menu: _menu, rightMenu, logo, theme }) => {
   const activeMenu1 = findLevel1Menu(activeLevel1Id)
   const activeMenu2 = findLevel2Menu(activeLevel1Id, activeLevel2Id)
 
-  const startSlide = () => {
+  const startSlide = useCallback(() => {
     setLeftNav(leftNav => leftNav.map(menu => {
       if (!cache.refs[menu.id]) return menu
       cache.slide[menu.id] = true
@@ -87,7 +94,7 @@ const TopNav = ({ menu: _menu, rightMenu, logo, theme }) => {
         initialX: rect.x
       }
     }))
-  }
+  }, [cache.refs, cache.slide])
 
   const getMenuCenter = useCallback(menuId => {
     const el = cache.refs[menuId]
@@ -109,11 +116,13 @@ const TopNav = ({ menu: _menu, rightMenu, logo, theme }) => {
     setShowLevel3(false)
     setShowChosenArrow(false)
     startSlide()
+    onChangeLevel1Id()
   }
 
-  const createHandleClickLevel1 = menuId => () => {
+  const createHandleClickLevel1 = useCallback(menuId => () => {
     setCollapsed(false)
     setActiveLevel1Id(menuId)
+    onChangeLevel1Id(menuId)
     setActiveLevel2Id()
     setShowLevel3(false)
     startSlide()
@@ -125,7 +134,13 @@ const TopNav = ({ menu: _menu, rightMenu, logo, theme }) => {
     // trigger the execution of useLayoutEffect below, this is necessary because
     // the other dependencies don't change
     setChosenArrowTick(x => x + 1)
-  }
+  }, [collapsed, onChangeLevel1Id, startSlide])
+
+  useEffect(() => {
+    if (currentLevel1Id !== activeLevel1Id) {
+      createHandleClickLevel1(currentLevel1Id)()
+    }
+  }, [currentLevel1Id, activeLevel1Id, createHandleClickLevel1])
 
   useLayoutEffect(() => {
     // get final menu pos before it slide. Do this before sliding start, or
@@ -348,7 +363,8 @@ const TopNav = ({ menu: _menu, rightMenu, logo, theme }) => {
 }
 
 TopNav.defaultProps = {
-  theme: 'light'
+  theme: 'light',
+  onChangeLevel1Id: () => null
 }
 
 TopNav.propTypes = {
@@ -367,6 +383,10 @@ TopNav.propTypes = {
 
   /** light|dark etc */
   theme: PropTypes.string,
+
+  currentLevel1Id: PropTypes.any,
+  
+  onChangeLevel1Id: PropTypes.func
 }
 
 export default TopNav

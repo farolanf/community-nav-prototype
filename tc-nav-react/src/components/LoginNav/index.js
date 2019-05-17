@@ -9,9 +9,12 @@ import AccountMenu from '../AccountMenu';
 
 const LoginNav = ({
   loggedIn,
+  avatarSrc,
   username,
   notificationButtonState,
   accountMenu,
+  switchText,
+  onSwitch,
   onClickLogin,
 }) => {
   const [openNotifications, setOpenNotifications] = useState()
@@ -32,6 +35,7 @@ const LoginNav = ({
           key='notification-button'
         />,
         <UserInfo
+          avatarSrc={avatarSrc}
           username={username}
           newNotifications={notificationButtonState === 'new'}
           onClick={handleClickUserInfo}
@@ -47,6 +51,8 @@ const LoginNav = ({
       <AccountMenu
         open={openAccountMenu}
         menu={accountMenu}
+        switchText={switchText}
+        onSwitch={onSwitch}
         onClose={() => setOpenAccountMenu(false)}
       />
     </div>
@@ -55,8 +61,11 @@ const LoginNav = ({
 
 LoginNav.propTypes = {
   loggedIn: PropTypes.bool,
+  avatarSrc: PropTypes.string,
   username: PropTypes.node,
   accountMenu: PropTypes.array,
+  switchText: PropTypes.string,
+  onSwitch: PropTypes.func,
 }
 
 export default LoginNav
