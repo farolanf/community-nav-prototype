@@ -156,7 +156,8 @@ const TopNav = ({ menu: _menu, logo, theme }) => {
     setIconSelectPos(menuId)
   }
 
-  const handleClickMore = () => {
+  const handleClickMore = e => {
+    e.preventDefault()
     setShowMore(x => !x)
   }
 
@@ -176,11 +177,6 @@ const TopNav = ({ menu: _menu, logo, theme }) => {
     })
     !showIconSelect && setTimeout(() => setShowIconSelect(true), 300)
   }
-
-  // hide more menu if any item clicked
-  useLayoutEffect(() => {
-    setShowMore(false)
-  }, [activeLevel1Id, activeLevel2Id, activeLevel3Id])
 
   const handleClickLeftMenu = () => setShowLeftMenu(x => !x)
 
@@ -279,6 +275,15 @@ const TopNav = ({ menu: _menu, logo, theme }) => {
     const onResize = _.debounce(() => setMoreMenu([]), 100)
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  useEffect(() => {
+    // handle click outside
+    const onClick = e => {
+      !e.defaultPrevented && setShowMore(false)
+    }
+    document.addEventListener('click', onClick)
+    return () => document.removeEventListener('click', onClick)
   }, [])
 
   return (
