@@ -43,7 +43,7 @@ const LoginNav = ({
         />,
         <UserInfo
           username={username}
-          notificationButtonState={notificationButtonState}
+          newNotifications={notificationButtonState === 'new'}
           onClick={onClickMenu}
           key='user-info'
         />
