@@ -241,6 +241,8 @@ function App() {
 
   const handleClickLogin = () => setLoggedIn(x => !x)
 
+  const handleClickLogout = () => setLoggedIn(false)
+
   const handleChangeNotificationState = () => {
     setNotificationState(x => x === 'none' ? 'new' : x === 'new' ? 'seen' : 'none')
   }
@@ -255,6 +257,15 @@ function App() {
             username='vic-tor'
             notificationButtonState={notificationState}
             onClickLogin={handleClickLogin}
+            accountMenu={[
+              { title: 'Settings' },
+              { title: 'Payments', },
+              { title: 'All projects', },
+              { separator: true },
+              { title: 'Help', },
+              { title: 'About Topcoder', },
+              { title: 'Log Out', onClick: handleClickLogout },
+            ]}
           />
         )}
         logo={<img src='/img/tc-logo.svg' alt='logo' />}

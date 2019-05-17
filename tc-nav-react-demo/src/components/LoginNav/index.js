@@ -11,6 +11,7 @@ const LoginNav = ({
   loggedIn,
   username,
   notificationButtonState,
+  accountMenu,
   onClickLogin,
 }) => {
   const [openNotifications, setOpenNotifications] = useState()
@@ -45,6 +46,7 @@ const LoginNav = ({
       />
       <AccountMenu
         open={openAccountMenu}
+        menu={accountMenu}
         onClose={() => setOpenAccountMenu(false)}
       />
     </div>
@@ -54,6 +56,7 @@ const LoginNav = ({
 LoginNav.propTypes = {
   loggedIn: PropTypes.bool,
   username: PropTypes.node,
+  accountMenu: PropTypes.array,
 }
 
 export default LoginNav

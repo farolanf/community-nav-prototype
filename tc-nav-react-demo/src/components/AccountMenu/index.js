@@ -3,29 +3,37 @@ import PropTypes from 'prop-types'
 import cn from 'classnames'
 import styles from './styles.module.scss'
 
-const AccountMenu = ({ open, onClose, avatarSrc, username, email, menu, switchText, onSwitch }) => (
-  <div className={cn(styles['user-info-popup'], open && styles.open)}>
-    <div className={styles.backdrop} onClick={onClose} />
-    <div className={styles.header}>
-      <img src={avatarSrc} width='60' className={styles.avatar} alt='avatar' />
-      <div className={styles.title}>
-        <span className={styles.handle}>{username}</span>
-        <span className={styles.email}>{email}</span>
+const AccountMenu = ({ open, onClose, avatarSrc, username, email, menu, switchText, onSwitch }) => {
+  const handleClickItem = item => () => {
+    if (item.onClick) {
+      item.onClick()
+      onClose()
+    }
+  }
+  return (
+    <div className={cn(styles['user-info-popup'], open && styles.open)}>
+      <div className={styles.backdrop} onClick={onClose} />
+      <div className={styles.header}>
+        <img src={avatarSrc} width='60' className={styles.avatar} alt='avatar' />
+        <div className={styles.title}>
+          <span className={styles.handle}>{username}</span>
+          <span className={styles.email}>{email}</span>
+        </div>
+      </div>
+      <div role='button' className={styles.switch} onClick={onSwitch}>
+        <img className={styles['switch-icon']} src='/img/icon-switch-business.svg' alt='switch' />
+        <span>{switchText}</span>
+      </div>
+      <div className={styles.menu}>
+        {menu.map(item => (
+          item.separator ? <span className={styles.separator} /> : (
+            <a href={item.href} onClick={handleClickItem(item)}>{item.title}</a>
+          )
+        ))}
       </div>
     </div>
-    <div role='button' className={styles.switch} onClick={onSwitch}>
-      <img className={styles['switch-icon']} src='/img/icon-switch-business.svg' alt='switch' />
-      <span>{switchText}</span>
-    </div>
-    <div className={styles.menu}>
-      {menu.map(item => (
-        item.separator ? <span className={styles.separator} /> : (
-          <a href={item.href} onClick={item.onClick}>{item.title}</a>
-        )
-      ))}
-    </div>
-  </div>
-)
+  )
+}
 
 AccountMenu.defaultProps = {
   avatarSrc: '/img/img-vic-tor-avatar.svg',
@@ -33,13 +41,13 @@ AccountMenu.defaultProps = {
   email: 'vic@topcoder.com',
   switchText: 'Switch to BUSINESS',
   menu: [
-    { title: 'Settings', href: '/', onClick: null },
-    { title: 'Payments', href: '/', onClick: null },
-    { title: 'All projects', href: '/', onClick: null },
+    { title: 'Settings', href: null, onClick: null },
+    { title: 'Payments', href: null, onClick: null },
+    { title: 'All projects', href: null, onClick: null },
     { separator: true },
-    { title: 'Help', href: '/', onClick: null },
-    { title: 'About Topcoder', href: '/', onClick: null },
-    { title: 'Log Out', href: '/', onClick: null },
+    { title: 'Help', href: null, onClick: null },
+    { title: 'About Topcoder', href: null, onClick: null },
+    { title: 'Log Out', href: null, onClick: null },
   ]
 }
 
