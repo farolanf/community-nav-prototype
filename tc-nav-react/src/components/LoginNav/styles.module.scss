@@ -6,65 +6,7 @@
   display: flex;
   align-items: center;
 
-  .userInfoContainer {
-    margin-left: 33px;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-
-    .avatar {
-      width: 30px;
-      height: 30px;
-      display: inline-block;
-    }
-
-    .handleContainer {
-      display: flex;
-      align-items: center;
-
-      .handle {
-        display: block;
-        font-size: 14px;
-        font-weight: 700;
-        line-height: 30px;
-        margin-left: 5px;
-        white-space: nowrap;
-      }
-
-      .dropdownIcon {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 16px;
-        height: 16px;
-        margin: 0 5px;
-
-        img {
-          transition: all 0.5s;
-        }
-      }
-    }
-
-    &:hover,
-    &.isUserPopupOpen {
-      background-color: $gray-hover-profile-icon;
-
-      .handleContainer .handle {
-        display: block;
-      }
-    }
-
-    &.isUserPopupOpen .handleContainer {
-
-      .dropdownIcon {
-        transform: rotate(180deg);
-      }
-    }
+  .notificationButton {
+    @include hide-mobile;
   }
-}
-
-.notificationsPopup {
-  position: absolute;
-  right: 5px;
-  top: 40px;
 }

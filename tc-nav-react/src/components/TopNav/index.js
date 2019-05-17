@@ -60,7 +60,7 @@ const TopNav = ({ menu: _menu, rightMenu, logo, theme }) => {
   const [showMobileSubMenu, setShowMobileSubMenu] = useState()
 
   const [moreMenu, setMoreMenu] = useState()
-  const [showMore, setShowMore] = useState()
+  const [openMore, setOpenMore] = useState()
 
   const createSetRef = id => el => {
     cache.refs[id] = el
@@ -155,12 +155,12 @@ const TopNav = ({ menu: _menu, rightMenu, logo, theme }) => {
     setIconSelectPos(menuId)
   }
 
-  const handleClickMore = e => {
-    e.preventDefault()
-    setShowMore(x => !x)
-  }
+  const handleClickMore = () => setOpenMore(x => !x)
+
+  const handleCloseMore = () => setOpenMore(false)
 
   const createHandleClickMoreItem = menuId => () => {
+    setOpenMore(false)
     setActiveLevel2Id(menuId)
     setShowLevel3(true)
     setChosenArrowPos(moreId)
@@ -276,15 +276,6 @@ const TopNav = ({ menu: _menu, rightMenu, logo, theme }) => {
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
-  useEffect(() => {
-    // handle click outside
-    const onClick = e => {
-      !e.defaultPrevented && setShowMore(false)
-    }
-    document.addEventListener('click', onClick)
-    return () => document.removeEventListener('click', onClick)
-  }, [])
-
   return (
     <div className={cn(styles.themeWrapper, `theme-${theme}`)}>
       <div className={styles.headerNavUi}>
@@ -316,7 +307,8 @@ const TopNav = ({ menu: _menu, rightMenu, logo, theme }) => {
           menu={leftNav}
           rightMenu={rightMenu}
           moreMenu={moreMenu}
-          showMore={showMore}
+          openMore={openMore}
+          onCloseMore={handleCloseMore}
           moreId={moreId}
           activeLevel1Id={activeLevel1Id}
           activeLevel2Id={activeLevel2Id}

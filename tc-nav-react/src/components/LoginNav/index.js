@@ -1,73 +1,54 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styles from './styles.module.scss'
 
 import NotificationButton from '../NotificationButton'
-import NotificationPanel from '../NotificationPanel';
-
-const UserInfo = ({ username, onClick }) => (
-  <div
-    className={styles.userInfoContainer}
-    role='button'
-    onClick={onClick}
-  >
-    <img className={styles.avatar} src="/img/img-vic-tor-avatar.svg" alt="avatar" />
-    <div className={styles.handleContainer}>
-      <span className={styles.handle}>{username}</span>
-      <span className={styles.dropdownIcon}>
-        <img src="/img/arrow-small-down.svg" alt="dropdown icon" />
-      </span>
-    </div>
-  </div>
-)
+import NotificationsPopup from '../NotificationsPopup'
+import UserInfo from '../UserInfo'
+import AccountMenu from '../AccountMenu';
 
 const LoginNav = ({
   loggedIn,
   username,
   notificationButtonState,
+  accountMenu,
   onClickLogin,
-  onClickMenu
 }) => {
-  const [showNotifications, setShowNotifications] = useState()
+  const [openNotifications, setOpenNotifications] = useState()
+  const [openAccountMenu, setOpenAccountMenu] = useState()
 
-  const handleClickNotifications = e => {
-    e.preventDefault()
-    setShowNotifications(x => !x)
-  }
+  const handleClickNotifications = () => setOpenNotifications(x => !x)
 
-  const handleClickNotificationsPopup = e => e.preventDefault()
-
-  useEffect(() => {
-    // handle click outside
-    const onClick = e => {
-      !e.defaultPrevented && setShowNotifications(false)
-    }
-    document.addEventListener('click', onClick)
-    return () => document.removeEventListener('click', onClick)
-  }, [])
+  const handleClickUserInfo = () => setOpenAccountMenu(x => !x)
 
   return (
     <div className={styles.loginContainer}>
       {loggedIn ? ([
         <NotificationButton
+          className={styles.notificationButton}
           state={notificationButtonState}
-          notificationsPopupOpen={showNotifications}
+          notificationsPopupOpen={openNotifications}
           onClick={handleClickNotifications}
           key='notification-button'
         />,
         <UserInfo
           username={username}
-          onClick={onClickMenu}
+          newNotifications={notificationButtonState === 'new'}
+          onClick={handleClickUserInfo}
           key='user-info'
         />
       ]) : (
         <span onClick={onClickLogin}>LOGIN</span>
       )}
-      {showNotifications && (
-        <div className={styles.notificationsPopup} onClick={handleClickNotificationsPopup}>
-          <NotificationPanel />
-        </div>
-      )}
+      <NotificationsPopup
+        open={openNotifications}
+        onClose={() => setOpenNotifications(false)}
+      />
+      <AccountMenu
+        open={openAccountMenu}
+        menu={accountMenu}
+        onClose={() => setOpenAccountMenu(false)}
+      />
     </div>
   )
 }
@@ -75,6 +56,7 @@ const LoginNav = ({
 LoginNav.propTypes = {
   loggedIn: PropTypes.bool,
   username: PropTypes.node,
+  accountMenu: PropTypes.array,
 }
 
 export default LoginNav
