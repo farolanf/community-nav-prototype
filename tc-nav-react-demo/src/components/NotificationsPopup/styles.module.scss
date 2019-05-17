@@ -1,6 +1,6 @@
 @import "../../assets/sass/_global/fonts";
-@import "../../assets/sass/_global/variables";
 @import "../../assets/sass/_global/common_ui";
+@import "../../assets/sass/_global/utils";
 
 .notificationsPanel {
   background-color: $white;
@@ -10,6 +10,17 @@
   width: 480px;
   height: auto;
   z-index: 100;
+  display: none;
+  position: absolute;
+  right: 5px;
+  top: 40px;
+
+  &.open {
+    display: flex;
+  }
+
+  @include backdrop;
+
   .notiHeader {
     background-color: $turquoise-dark;
     border-radius: 10px 10px 0 0;

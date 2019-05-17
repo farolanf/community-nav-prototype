@@ -1,35 +1,24 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styles from './styles.module.scss'
 
 import NotificationButton from '../NotificationButton'
-import NotificationPanel from '../NotificationPanel'
+import NotificationsPopup from '../NotificationsPopup'
 import UserInfo from '../UserInfo'
+import AccountMenu from '../AccountMenu';
 
 const LoginNav = ({
   loggedIn,
   username,
   notificationButtonState,
   onClickLogin,
-  onClickMenu
 }) => {
-  const [showNotifications, setShowNotifications] = useState()
+  const [openNotifications, setOpenNotifications] = useState()
+  const [openAccountMenu, setOpenAccountMenu] = useState()
 
-  const handleClickNotifications = e => {
-    e.preventDefault()
-    setShowNotifications(x => !x)
-  }
+  const handleClickNotifications = () => setOpenNotifications(x => !x)
 
-  const handleClickNotificationsPopup = e => e.preventDefault()
-
-  useEffect(() => {
-    // handle click outside
-    const onClick = e => {
-      !e.defaultPrevented && setShowNotifications(false)
-    }
-    document.addEventListener('click', onClick)
-    return () => document.removeEventListener('click', onClick)
-  }, [])
+  const handleClickUserInfo = () => setOpenAccountMenu(x => !x)
 
   return (
     <div className={styles.loginContainer}>
@@ -37,24 +26,27 @@ const LoginNav = ({
         <NotificationButton
           className={styles.notificationButton}
           state={notificationButtonState}
-          notificationsPopupOpen={showNotifications}
+          notificationsPopupOpen={openNotifications}
           onClick={handleClickNotifications}
           key='notification-button'
         />,
         <UserInfo
           username={username}
           newNotifications={notificationButtonState === 'new'}
-          onClick={onClickMenu}
+          onClick={handleClickUserInfo}
           key='user-info'
         />
       ]) : (
         <span onClick={onClickLogin}>LOGIN</span>
       )}
-      {showNotifications && (
-        <div className={styles.notificationsPopup} onClick={handleClickNotificationsPopup}>
-          <NotificationPanel />
-        </div>
-      )}
+      <NotificationsPopup
+        open={openNotifications}
+        onClose={() => setOpenNotifications(false)}
+      />
+      <AccountMenu
+        open={openAccountMenu}
+        onClose={() => setOpenAccountMenu(false)}
+      />
     </div>
   )
 }

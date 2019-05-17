@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import cn from 'classnames'
 import styles from './styles.module.scss'
 
-const NotificationPanel = ({ emptyTitle, emptyText }) => (
-  <div className={styles.notificationsPanel}>
+const NotificationsPopup = ({ open, onClose, emptyTitle, emptyText }) => (
+  <div className={cn(styles.notificationsPanel, open && styles.open)}>
+    <div className={styles.backdrop} onClick={onClose} />
     <div className={styles.notiHeader}>
       <span className={styles.leftNoti}>Notifications</span>
       <div className={styles.rights}>
@@ -22,7 +23,7 @@ const NotificationPanel = ({ emptyTitle, emptyText }) => (
   </div>
 )
 
-NotificationPanel.defaultProps = {
+NotificationsPopup.defaultProps = {
   emptyTitle: 'Good job! You’re all caught up',
   emptyText: (
     <div>
@@ -33,7 +34,7 @@ NotificationPanel.defaultProps = {
   )
 }
 
-NotificationPanel.propTypes = {
+NotificationsPopup.propTypes = {
   emptyTitle: PropTypes.node,
   emptyText: PropTypes.node,
 
@@ -48,4 +49,4 @@ NotificationPanel.propTypes = {
   notifications: PropTypes.array,
 }
 
-export default NotificationPanel
+export default NotificationsPopup
