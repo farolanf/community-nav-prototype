@@ -156,6 +156,27 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
     setShowMore(x => !x)
   }
 
+  const createHandleClickMoreItem = menuId => () => {
+    setActiveLevel2Id(menuId)
+    setShowLevel3(true)
+    setChosenArrowPos(moreId)
+    // let the level 3 menu mounted first for sliding indicator to work
+    setTimeout(() => {
+      const menu = findLevel2Menu(activeLevel1Id, menuId)
+      if (menu && menu.subMenu) {
+        // select first level 3 item
+        setActiveLevel3Id(menu.subMenu[0].id)
+        // this requires the item element to be mounted first
+        setIconSelectPos(menu.subMenu[0].id)
+      }
+    })
+    !showIconSelect && setTimeout(() => setShowIconSelect(true), 300)
+  }
+
+  useLayoutEffect(() => {
+    setShowMore(false)
+  }, [activeLevel1Id, activeLevel2Id, activeLevel3Id])
+
   const handleClickLeftMenu = () => setShowLeftMenu(x => !x)
 
   const createHandleClickLevel2Mobile = menuId => () => {
@@ -345,8 +366,8 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
                     </a>
                   ))}
                   {/* The More menu */}
-                  {moreMenu && moreMenu.length > 0 && (
-                    <div className={styles.moreBtnContainer}>
+                  {level1.id === activeLevel1Id && moreMenu && moreMenu.length > 0 && (
+                    <div className={cn(styles.moreBtnContainer, showMore && styles.moreOpen)}>
                       <button
                         className={cn(styles.primaryLevel2, styles.moreBtn)}
                         onClick={handleClickMore}
@@ -356,9 +377,14 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
                         <span>More</span>
                         <img src='/img/arrow-small-down.svg' alt='dropdown-icon' />
                       </button>
-                      <div className={cn(styles.moreContentContainer, showMore && styles.moreContentContainerOpen)}>
+                      <div className={styles.moreContentContainer}>
                         {moreMenu.map((menu, i) => (
-                          <a className={styles.primaryLevel2} key={`more-item-${i}`}>
+                          <a
+                            className={cn(styles.primaryLevel2, menu.id === activeLevel2Id && styles.primaryLevel2Open)}
+                            href={menu.href}
+                            key={`more-item-${i}`}
+                            onClick={createHandleClickMoreItem(menu.id)}
+                          >
                             {menu.title}
                           </a>
                         ))}
