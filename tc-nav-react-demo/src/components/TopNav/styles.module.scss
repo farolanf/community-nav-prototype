@@ -140,10 +140,6 @@
   display: flex;
 
   @include hide-mobile;
-
-  &.primaryNavContainerOpen {
-    display: flex;
-  }
 }
 
 .primaryNav {
