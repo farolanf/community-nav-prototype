@@ -25,7 +25,6 @@ config.entry = path.join(srcDir, 'index.js')
 config.output.path = __dirname
 config.output.filename = 'index.js'
 config.externals['./TopNav'] = './TopNav'
-config.externals['./SubNav'] = './SubNav'
 webpack(config, handleError)
 
 function handleError (err, stats) {

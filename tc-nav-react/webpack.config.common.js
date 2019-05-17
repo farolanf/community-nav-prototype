@@ -35,7 +35,8 @@ module.exports = {
   resolve: {
     alias: {
       assets: path.resolve(__dirname, 'src/assets'),
-      react: path.resolve(__dirname, '../node_modules/react')
+      react: path.resolve(__dirname, '../node_modules/react'),
+      'react-dom': path.resolve(__dirname, '../node_modules/react-dom')
     }
   },
   externals: {
@@ -44,6 +45,12 @@ module.exports = {
       commonjs2: 'react',
       amd: 'React',
       root: 'React'
+    },
+    'react-dom': {
+      commonjs: 'react-dom',
+      commonjs2: 'react-dom',
+      amd: 'ReactDOM',
+      root: 'ReactDOM'
     }
   }
 }

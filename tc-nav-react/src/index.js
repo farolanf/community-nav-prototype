@@ -1,2 +1,3 @@
 export TopNav from './components/TopNav'
-export SubNav from './components/SubNav'
+export ChosenArrow from './components/ChosenArrow'
+export IconSelect from './components/IconSelect'

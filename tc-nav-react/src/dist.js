@@ -1,7 +1,9 @@
 import TopNav from './components/TopNav'
-import SubNav from './components/SubNav'
+import ChosenArrow from './components/ChosenArrow'
+import IconSelect from './components/IconSelect'
 
 export default {
   TopNav,
-  SubNav
+  ChosenArrow,
+  IconSelect
 }
