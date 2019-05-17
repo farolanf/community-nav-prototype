@@ -8,8 +8,8 @@ import styles from './index.module.scss'
 import MobileNav from './MobileNav';
 import MobileSubNav from './MobileSubNav';
 import MobileMenu from './MobileMenu';
-import SubNav from './SubNav';
 import PrimaryNav from './PrimaryNav';
+import SubNav from './SubNav';
 
 const moreId = 'more'
 
@@ -123,7 +123,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
       // wait for sliding to end before showing arrow for the first time
       setShowChosenArrow(true)
     }, collapsed ? 250 : 0)
-    // trigger useLayoutEffect to set arrow pos, this is necessary because
+    // trigger the execution of useLayoutEffect below, this is necessary because
     // the other dependencies don't change
     setChosenArrowTick(x => x + 1)
   }
@@ -177,6 +177,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
     !showIconSelect && setTimeout(() => setShowIconSelect(true), 300)
   }
 
+  // hide more menu if any item clicked
   useLayoutEffect(() => {
     setShowMore(false)
   }, [activeLevel1Id, activeLevel2Id, activeLevel3Id])
