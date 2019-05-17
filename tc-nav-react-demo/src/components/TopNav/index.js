@@ -34,7 +34,7 @@ const initMenuId = menu => {
 /**
  * TopNav is the main navigation component.
  */
-const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
+const TopNav = ({ menu: _menu, logo, theme }) => {
   const [cache] = useState({
     refs: {},
     slide: {},
@@ -351,6 +351,10 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
   )
 }
 
+TopNav.defaultProps = {
+  theme: 'light'
+}
+
 TopNav.propTypes = {
   /**
    * Array of menu objects, each with properties:
@@ -359,7 +363,12 @@ TopNav.propTypes = {
    *   - href {string} The href for wrapper anchor
    *   - subMenu {array} Children menu
    */
-  menu: PropTypes.array.isRequired
+  menu: PropTypes.array.isRequired,
+  
+  logo: PropTypes.node,
+
+  /** light|dark etc */
+  theme: PropTypes.string,
 }
 
 export default TopNav
