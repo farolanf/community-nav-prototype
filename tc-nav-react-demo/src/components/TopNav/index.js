@@ -4,12 +4,12 @@ import cn from 'classnames'
 import _ from 'lodash'
 
 import ChosenArrow from '../ChosenArrow'
-import IconSelect from '../IconSelect'
 import styles from './styles.module.scss'
 
 import MobileNav from './MobileNav';
 import MobileSubNav from './MobileSubNav';
 import MobileMenu from './MobileMenu';
+import SubNav from './SubNav';
 
 const moreId = 'more'
 
@@ -386,22 +386,15 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
         </div>
 
         {/* Level 3 menu */}
-        <div className={cn(styles.secondaryNav, showLevel3 && styles.secondaryNavOpen)}>
-          <div className={styles.secondaryNavLinkContainer}>
-            {activeMenu2 && activeMenu2.subMenu && activeMenu2.subMenu.map((level3, i) => (
-              <a
-                className={cn(styles.secondaryNavItem, level3.id === activeLevel3Id && styles.secondaryNavItemOpen)}
-                href={level3.href}
-                key={`level3-${i}`}
-                onClick={createHandleClickLevel3(level3.id)}
-                ref={createSetMenuRef(level3.id)}
-              >
-                {level3.title}
-              </a>
-            ))}
-            <IconSelect show={showIconSelect} x={iconSelectX} />
-          </div>
-        </div>
+        <SubNav
+          open={showLevel3}
+          menu={activeMenu2}
+          activeChildId={activeLevel3Id}
+          showIndicator={showIconSelect}
+          indicatorX={iconSelectX}
+          createHandleClickItem={createHandleClickLevel3}
+          createSetRef={createSetMenuRef}
+        />
 
         {/* Mobile level 2 menu */}
         {showLeftMenu && activeMenu1 && (
