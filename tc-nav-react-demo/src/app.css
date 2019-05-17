@@ -9,12 +9,6 @@ body {
   padding: 16px;
 }
 
-@media (max-width: 768px) {
-  .help {
-    display: none;
-  }  
-}
-
 .theme-btn {
   padding: 8px;
   font-weight: bold;

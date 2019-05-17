@@ -262,7 +262,6 @@ function App() {
       />
       <div className='help'>
         <h2>Theme support</h2>
-        <p>* Note: Theme example only implemented on the wide version.</p>
         <p>Click a level 2 menu item to show the level 3 menu then click the following button.</p>
         <button onClick={handleClickToggleTheme}>
           Toggle light/dark theme
