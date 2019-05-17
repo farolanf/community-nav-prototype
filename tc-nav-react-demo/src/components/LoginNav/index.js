@@ -3,23 +3,8 @@ import PropTypes from 'prop-types'
 import styles from './styles.module.scss'
 
 import NotificationButton from '../NotificationButton'
-import NotificationPanel from '../NotificationPanel';
-
-const UserInfo = ({ username, onClick }) => (
-  <div
-    className={styles.userInfoContainer}
-    role='button'
-    onClick={onClick}
-  >
-    <img className={styles.avatar} src="/img/img-vic-tor-avatar.svg" alt="avatar" />
-    <div className={styles.handleContainer}>
-      <span className={styles.handle}>{username}</span>
-      <span className={styles.dropdownIcon}>
-        <img src="/img/arrow-small-down.svg" alt="dropdown icon" />
-      </span>
-    </div>
-  </div>
-)
+import NotificationPanel from '../NotificationPanel'
+import UserInfo from '../UserInfo'
 
 const LoginNav = ({
   loggedIn,
@@ -58,6 +43,7 @@ const LoginNav = ({
         />,
         <UserInfo
           username={username}
+          notificationButtonState={notificationButtonState}
           onClick={onClickMenu}
           key='user-info'
         />
