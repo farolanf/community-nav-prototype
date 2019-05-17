@@ -5,6 +5,7 @@ import styles from './styles.module.scss'
 
 const PrimaryNav = ({
   collapsed,
+  showLeftMenu,
   logo,
   menu,
   rightMenu,
@@ -25,7 +26,7 @@ const PrimaryNav = ({
   const filterNotInMore = menu => !(moreMenu || []).find(x => x.id === menu.id)
   
   return (
-    <div className={styles.primaryNavContainer}>
+    <div className={cn(styles.primaryNavContainer, showLeftMenu && styles.primaryNavContainerOpen)}>
       <div className={styles.primaryNav} ref={createSetRef('primaryNav')}>
         <div
           className={cn(styles.tcLogo, collapsed && styles.tcLogoPush)}

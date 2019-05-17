@@ -306,6 +306,7 @@ const TopNav = ({ menu: _menu, logo, theme = 'light' }) => {
         {/* Primary navigation (level 1 and level 2 menu) */}
         <PrimaryNav
           collapsed={collapsed}
+          showLeftMenu={showLeftMenu}
           logo={logo}
           menu={leftNav}
           rightMenu={rightMenu}
