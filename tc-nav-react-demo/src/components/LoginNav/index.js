@@ -50,6 +50,7 @@ const LoginNav = ({
     <div className={styles.loginContainer}>
       {loggedIn ? ([
         <NotificationButton
+          className={styles.notificationButton}
           state={notificationButtonState}
           notificationsPopupOpen={showNotifications}
           onClick={handleClickNotifications}

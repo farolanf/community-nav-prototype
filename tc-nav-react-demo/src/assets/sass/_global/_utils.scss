@@ -18,6 +18,12 @@
   }
 }
 
+@mixin not-mobile {
+  @media (min-width: $screen-sm + 1px) {
+    @content;
+  }
+}
+
 @mixin screen-md {
   @media (max-width: $screen-md) {
     @content;

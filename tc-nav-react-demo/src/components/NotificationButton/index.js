@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import cn from 'classnames'
 import styles from './styles.module.scss'
 
-const NotificationButton = ({ state, onClick, notificationsPopupOpen }) => (
+const NotificationButton = ({ className, state, onClick, notificationsPopupOpen }) => (
   <div
-    className={cn(styles.notificationButton, styles[state], notificationsPopupOpen && styles.isNotificationsPopupOpen)}
+    className={cn(styles.notificationButton, styles[state], notificationsPopupOpen && styles.isNotificationsPopupOpen, className)}
     onClick={onClick}
   >
     <img src="/img/icon-bell.svg" alt="notification" />
