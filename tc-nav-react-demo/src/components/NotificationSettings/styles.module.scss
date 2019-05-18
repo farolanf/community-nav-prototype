@@ -5,6 +5,7 @@
 .settings-dialog {
   display: none;
   background-color: $gray-10;
+  overflow: auto;
 
   @include fullscreen-dialog;
 

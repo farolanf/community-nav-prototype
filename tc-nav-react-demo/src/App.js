@@ -294,6 +294,13 @@ function App() {
     }
   ]
 
+  const emailOptions = [
+    { value: 'off', label: 'Off' },
+    { value: 'immediately', label: 'Immediately' },
+    { value: 'daily', label: 'Daily' },
+    { value: 'everyOtherDay', label: 'Every other day' },
+  ]
+
   const notificationSettings = [
     {
       category: 'Project notifications',
@@ -303,13 +310,106 @@ function App() {
       website: true,
       emailControl: 'dropdown',
       email: 'immediately',
-      emailOptions: [
-        { value: 'off', label: 'Off' },
-        { value: 'immediately', label: 'Immediately' },
-        { value: 'daily', label: 'Daily' },
-        { value: 'everyOtherDay', label: 'Every other day' },
-      ]
-    }
+      emailOptions
+    },
+    {
+      category: 'Project notifications',
+      title: 'Project status',
+      description: `Receive a notification any time your porject status changes`,
+      websiteControl: 'checkbox',
+      website: true,
+      emailControl: 'dropdown',
+      email: 'daily',
+      emailOptions
+    },
+    {
+      category: 'Project notifications',
+      title: 'Project scope',
+      description: `Receive a notification any time your project scope is updated`,
+      websiteControl: 'checkbox',
+      website: true,
+      emailControl: 'dropdown',
+      email: 'everyOtherDay',
+      emailOptions
+    },
+    {
+      category: 'Project notifications',
+      title: 'File uploads',
+      description: `Receive a notification any time a new file is uploaded to your project`,
+      websiteControl: 'checkbox',
+      website: true,
+      emailControl: 'dropdown',
+      email: 'daily',
+      emailOptions
+    },
+    {
+      category: 'Project notifications',
+      title: 'New project link',
+      description: `Receive a notification any time a new link is added to your project`,
+      websiteControl: 'checkbox',
+      website: true,
+      emailControl: 'dropdown',
+      email: 'off',
+      emailOptions
+    },
+    {
+      category: 'Project notifications',
+      title: 'Project team',
+      description: `Receive a notification any time a person joins or leaves the team`,
+      websiteControl: 'checkbox',
+      website: true,
+      emailControl: 'dropdown',
+      email: 'off',
+      emailOptions
+    },
+    {
+      category: 'Project notifications',
+      title: 'Project plan',
+      description: `Receive a notification when a phase is added to your project plan`,
+      websiteControl: 'checkbox',
+      website: true,
+      emailControl: 'dropdown',
+      email: 'daily',
+      emailOptions
+    },
+    {
+      category: 'Project notifications',
+      title: 'Project phase updates',
+      description: `Receive a notification for any activity on your project phase
+      Immediately`,
+      websiteControl: 'checkbox',
+      website: true,
+      emailControl: 'dropdown',
+      email: 'immediately',
+      emailOptions
+    },
+    {
+      category: 'System notifications',
+      title: 'System updates',
+      description: `From time to time we change things. We are required by law to get you informed for those updates.`,
+      websiteControl: 'checkbox',
+      website: true,
+      emailControl: 'checkbox',
+      email: true
+    },
+    {
+      category: 'System notifications',
+      title: 'Product announcements and updates',
+      description: `Stay up to date with latest updates and learn about the amazing new features we are developing for Topcoder.`,
+      websiteControl: 'checkbox',
+      website: false,
+      emailControl: 'switch',
+      email: false
+    },
+    {
+      category: 'System notifications',
+      title: 'Marketing messages',
+      description: `Learn about new solutions and important promotions from Topcoder.`,
+      websiteControl: 'checkbox',
+      website: false,
+      emailControl: 'switch',
+      email: false
+    },
   ]
 
   const [theme, setTheme] = useState('light')
@@ -342,6 +442,10 @@ function App() {
   const handleChangeSettings = (settings, item, name) => {
     setSettings(settings)
     console.log(`"${item.title}"`, `${name} = ${item[name]}`)
+  }
+
+  const handleSaveSettings = () => {
+    console.log('save settings')
   }
 
   return (
@@ -389,6 +493,7 @@ function App() {
         onClose={() => setOpenSettings(false)}
         settings={settings}
         onChange={handleChangeSettings}
+        onSave={handleSaveSettings}
       />
     </div>
   )

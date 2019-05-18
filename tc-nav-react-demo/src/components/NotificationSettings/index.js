@@ -83,7 +83,7 @@ const Item = ({ item, onChange }) => {
   )
 }
 
-const NotificationSettings = ({ open, settings, theme, onChange, onClose }) => {
+const NotificationSettings = ({ open, settings, theme, onChange, onClose, onSave }) => {
   const settingsWithId = useMemo(() => {
     return settings.map((x, i) => ({ ...x, id: x.id || i }))
   }, [settings])
@@ -161,6 +161,16 @@ const NotificationSettings = ({ open, settings, theme, onChange, onClose }) => {
           </div>
         ))}
 
+        <div className={styles['bottom-btn']}>
+          <span
+            role='button'
+            className={cn(styles['btn'], styles['btn-gray'])}
+            onClick={onSave}
+          >
+            Save settings
+          </span>
+        </div>
+
       </div>
 
     </div>
@@ -216,6 +226,9 @@ NotificationSettings.propTypes = {
    * 
   */
   onChange: PropTypes.func,
+
+  /** Called when save button is clicked */
+  onSave: PropTypes.func,
 
   onClose: PropTypes.func,
 }
