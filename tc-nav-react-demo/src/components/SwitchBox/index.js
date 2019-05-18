@@ -4,7 +4,7 @@ import styles from './styles.module.scss'
 
 const SwitchBox = ({ checked, onClick }) => (
   <div
-    className={cn(styles['switch-box'],checked && styles['checked'])}
+    className={cn(styles['switch-box'], checked && styles['checked'])}
     onClick={onClick}
   >
     <span className={styles['label-on']}>

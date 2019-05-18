@@ -1,4 +1,4 @@
-import React, { useMemo, Fragment } from 'react'
+import React, { useState, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
 import _ from 'lodash'
@@ -9,7 +9,40 @@ import CheckBox from '../CheckBox'
 import SwitchBox from '../SwitchBox'
 import DropdownBox from '../DropdownBox'
 
-const Item = ({ item }) => {
+const ItemControl = ({ control, name, value, options, onChange }) => {
+  const [dropdownOpen, setDropdownOpen] = useState()
+  return (
+    control === 'checkbox' ? (
+      <CheckBox
+        checked={value}
+        onClick={() => onChange(name, !value)}
+      />
+    ) : control === 'switch' ? (
+      <SwitchBox
+        checked={value}
+        onClick={() => onChange(name, !value)}
+      />
+    ) : control === 'dropdown' && (
+      <DropdownBox
+        open={dropdownOpen}
+        onClick={() => setDropdownOpen(true)}
+        onClose={() => setDropdownOpen(false)}
+        checked={value !== options[0].value}
+        value={value}
+        options={options}
+        onChange={value => onChange(name, value)}
+      />
+    )
+  )
+}
+
+/**
+ * Render option controls.
+ * 
+ * @param item {item} The option object
+ * @param onChange {function} Called with name (eg. website) and the new value
+ */
+const Item = ({ item, onChange }) => {
   return (
     <li>
       <div className={styles['list-item']}>
@@ -23,21 +56,23 @@ const Item = ({ item }) => {
         </div>
         
         <div className={styles['website']}>
-          <CheckBox checked={item.website} />
+          <ItemControl
+            control={item.websiteControl}
+            name='website'
+            value={item.website}
+            options={item.websiteOptions}
+            onChange={onChange}
+          />
         </div>
         
         <div className={styles['as-email']}>
-          {_.isBoolean(item.email) && (
-            <CheckBox checked={item.email} />
-          )}
-          
-          {!_.isUndefined(item.emailOptions) && (
-            <DropdownBox
-              checked={item.emailValue !== item.emailOptions[0].value}
-              value={item.emailValue}
-              options={item.emailOptions}
-            />
-          )}
+          <ItemControl
+            control={item.emailControl}
+            name='email'
+            value={item.email}
+            options={item.emailOptions}
+            onChange={onChange}
+          />
         </div>
       </div>
       
@@ -49,14 +84,32 @@ const Item = ({ item }) => {
 }
 
 const NotificationSettings = ({ open, settings, theme, onChange, onClose }) => {
+  const settingsWithId = useMemo(() => {
+    return settings.map((x, i) => ({ ...x, id: x.id || i }))
+  }, [settings])
+
   const categories = useMemo(() => {
-    return _.uniq(settings.map(x => x.category))
+    return _.uniq(settingsWithId.map(x => x.category))
       .map(category => ({
         category,
-        settings: settings.filter(x => x.category === category)
+        settings: settingsWithId.filter(x => x.category === category)
       }))
 
-  }, [settings])
+  }, [settingsWithId])
+
+  const createHandleChangeItem = item => (name, value) => {
+    const _settings = settingsWithId.map(x => {
+      x = { ...x }
+      if (x.id === item.id) {
+        x[name] = value
+      }
+      delete x.id
+      return x
+    })
+    item = { ...item, [name]: value }
+    delete item.id
+    onChange(_settings, item, name)
+  }
 
   return (
     <div className={cn(styles['settings-dialog'], styles['theme-wrapper'], `theme-${theme}`, open && styles.open)}>
@@ -101,6 +154,7 @@ const NotificationSettings = ({ open, settings, theme, onChange, onClose }) => {
                 <Item
                   item={item}
                   key={`item-${i}`}
+                  onChange={createHandleChangeItem(item)}
                 />
               ))}
             </ul>
@@ -120,8 +174,10 @@ NotificationSettings.defaultProps = {
       category: 'Project notifications',
       title: 'New posts and replies',
       description: `Get a notification any time somebody posts on your project. This will make sure you can stay up-to-date with what's happening on your project.`,
+      websiteControl: 'checkbox',
       website: true,
-      emailValue: 'immediately',
+      emailControl: 'dropdown',
+      email: 'immediately',
       emailOptions: [
         { value: 'off', label: 'Off' },
         { value: 'immediately', label: 'Immediately' },
@@ -140,14 +196,12 @@ NotificationSettings.propTypes = {
    *   - title {string} Option title
    *   - description {string} Option description
    *   - category {string} Option category. Eg. Project notifications
-   *   - website {bool} Value for website setting
-   *   - email {bool} Value for email setting
-   *   - emailValue {string}
-   *   - emailOptions {array} Options for emailValue. Each option should have
-   *     value and label properties.
-   * 
-   * Email setting type can be a checkbox or a select box, which use
-   * email {bool}, or emailValue and emailOptions respectively.
+   *   - websiteControl {string(checkbox|switch|dropdown)} Type of control for website
+   *   - website {bool|string} Website value
+   *   - websiteOptions {array({ value, label })} Website options for dropdown
+   *   - emailControl {string(checkbox|switch|dropdown)} Type of control for email
+   *   - email {bool|string} Email value
+   *   - emailOptions {array({ value, label })} Email options for dropdown
   */
   settings: PropTypes.array,
 
@@ -158,6 +212,7 @@ NotificationSettings.propTypes = {
    * 
    * @param settings {array} The updated settings
    * @param option {object} The specific settings item that changed
+   * @param name {object} The value that changed. Eg. website
    * 
   */
   onChange: PropTypes.func,

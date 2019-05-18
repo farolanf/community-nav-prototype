@@ -294,12 +294,31 @@ function App() {
     }
   ]
 
+  const notificationSettings = [
+    {
+      category: 'Project notifications',
+      title: 'New posts and replies',
+      description: `Get a notification any time somebody posts on your project. This will make sure you can stay up-to-date with what's happening on your project.`,
+      websiteControl: 'checkbox',
+      website: true,
+      emailControl: 'dropdown',
+      email: 'immediately',
+      emailOptions: [
+        { value: 'off', label: 'Off' },
+        { value: 'immediately', label: 'Immediately' },
+        { value: 'daily', label: 'Daily' },
+        { value: 'everyOtherDay', label: 'Every other day' },
+      ]
+    }
+  ]
+
   const [theme, setTheme] = useState('light')
   const [loggedIn, setLoggedIn] = useState()
   const [notificationState, setNotificationState] = useState('new')
   const [activeLevel1Id, setActiveLevel1Id] = useState()
   const [switchText, setSwitchText] = useState('Switch to BUSINESS')
   const [openSettings, setOpenSettings] = useState()
+  const [settings, setSettings] = useState(notificationSettings)
 
   const handleClickToggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light') 
 
@@ -318,6 +337,11 @@ function App() {
 
   const handleSwitchMenu = () => {
     setActiveLevel1Id(x => x === 'business' ? 'work' : 'business')
+  }
+
+  const handleChangeSettings = (settings, item, name) => {
+    setSettings(settings)
+    console.log(`"${item.title}"`, `${name} = ${item[name]}`)
   }
 
   return (
@@ -363,6 +387,8 @@ function App() {
       <NotificationSettings
         open={openSettings}
         onClose={() => setOpenSettings(false)}
+        settings={settings}
+        onChange={handleChangeSettings}
       />
     </div>
   )
