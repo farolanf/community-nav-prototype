@@ -29,7 +29,7 @@ const PrimaryNav = ({
   const filterNotInMore = menu => !(moreMenu || []).find(x => x.id === menu.id)
   
   return (
-    <div className={cn(styles.primaryNavContainer, showLeftMenu && styles.primaryNavContainerOpen)} ref={createSetRef('primaryNavContainer')}>
+    <div className={cn(styles.primaryNavContainer, showLeftMenu && styles.primaryNavContainerOpen)}>
       <div className={styles.primaryNav} ref={createSetRef('primaryNav')}>
         <div
           className={cn(styles.tcLogo, collapsed && styles.tcLogoPush)}

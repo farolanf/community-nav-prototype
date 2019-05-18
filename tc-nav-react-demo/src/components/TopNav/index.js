@@ -212,6 +212,16 @@ const TopNav = ({
 
   const handleClickSubMenu = () => setShowMobileSubMenu(x => !x)
 
+  const setOverflow = useCallback(set => {
+    cache.refs.primaryNav.style.overflow = set ? 'hidden' : ''
+    const containers = Object.keys(cache.refs)
+      .filter(key => key.startsWith('level2Container'))
+      .map(key => cache.refs[key])
+    containers.forEach(el => {
+      el.style.overflow = set ? 'hidden' : ''
+    })
+  }, [cache.refs])
+
   useEffect(() => {
     const doSlide = () => {
       leftNav.forEach(menu => {
@@ -231,21 +241,12 @@ const TopNav = ({
         })
       })
     }
-    const setOverflow = set => {
-      cache.refs.primaryNav.style.overflow = set ? 'hidden' : ''
-      const containers = Object.keys(cache.refs)
-        .filter(key => key.startsWith('level2Container'))
-        .map(key => cache.refs[key])
-      containers.forEach(el => {
-        el.style.overflow = set ? 'hidden' : ''
-      })
-    }
     // set overflow first to have correct final position
     setOverflow(true)
     doSlide()
     // overflow must not be set, otherwise popups won't show
     setOverflow(false)
-  }, [cache.slide, cache.refs, leftNav])
+  }, [cache.slide, cache.refs, leftNav, setOverflow])
 
   const handleRightMenuResize = () => {
     regenerateMoreMenu()
@@ -284,22 +285,10 @@ const TopNav = ({
       }
       newMoreMenu.length && setMoreMenu(newMoreMenu)
     }
-    const setOverflow = set => {
-      cache.refs.primaryNavContainer.style.overflow = set ? 'hidden' : ''
-      cache.refs.primaryNav.style.overflow = set ? 'hidden' : ''
-      const containers = Object.keys(cache.refs)
-        .filter(key => key.startsWith('level2Container'))
-        .map(key => cache.refs[key])
-      containers.forEach(el => {
-        el.style.overflow = set ? 'hidden' : ''
-      })
-    }
     setOverflow(true)
-    setTimeout(() => {
-      generateMenu()
-      setOverflow(false)
-    })
-  }, [activeMenu1, cache.refs, moreMenu])
+    generateMenu()
+    setOverflow(false)
+  }, [activeMenu1, cache.refs, moreMenu, setOverflow])
 
   // generate more menu before paint
   useLayoutEffect(() => {
