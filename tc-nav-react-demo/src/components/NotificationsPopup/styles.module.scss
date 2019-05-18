@@ -207,8 +207,12 @@
         padding: 10px 0;
         border-bottom: 1px solid $gray-02;
         position: relative;
+        cursor: pointer;
         .txt {
           padding-right: 30px;
+        }
+        .dismissItem {
+          @include hide-mobile;
         }
       }
       .bottom-info {
@@ -242,6 +246,9 @@
       margin-top: -4px;
       z-index: 1;
       position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       .copyicon-title {
         padding-left: 26px;
         background: url(#{$img-path}/group.svg) left center no-repeat;
