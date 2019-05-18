@@ -399,7 +399,7 @@ function App() {
       websiteControl: 'checkbox',
       website: false,
       emailControl: 'switch',
-      email: false
+      email: true
     },
     {
       category: 'System notifications',
