@@ -295,7 +295,7 @@ function App() {
 
   const [theme, setTheme] = useState('light')
   const [loggedIn, setLoggedIn] = useState()
-  const [notificationState, setNotificationState] = useState('new')
+  const [notificationState, setNotificationState] = useState('none')
   const [activeLevel1Id, setActiveLevel1Id] = useState()
   const [switchText, setSwitchText] = useState('Switch to BUSINESS')
 
@@ -328,7 +328,7 @@ function App() {
             avatarSrc='/img/img-vic-tor-avatar.svg'
             username='vic-tor'
             notificationButtonState={notificationState}
-            notifications={notifications}
+            notifications={notificationState !== 'none' ? notifications : []}
             onClickLogin={handleClickLogin}
             accountMenu={[
               { title: 'Settings' },

@@ -50,3 +50,7 @@
     outline: none;
   }
 }
+
+.mobile-only {
+  @include mobile-only;
+}
