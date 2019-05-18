@@ -25,7 +25,7 @@ const ItemControl = ({ control, name, value, options, onChange }) => {
     ) : control === 'dropdown' && (
       <DropdownBox
         open={dropdownOpen}
-        onClick={() => setDropdownOpen(true)}
+        onClick={() => setDropdownOpen(x => !x)}
         onClose={() => setDropdownOpen(false)}
         checked={value !== options[0].value}
         value={value}
