@@ -12,6 +12,7 @@ const LoginNav = ({
   avatarSrc,
   username,
   notificationButtonState,
+  notifications,
   accountMenu,
   switchText,
   onSwitch,
@@ -46,12 +47,15 @@ const LoginNav = ({
       )}
       <NotificationsPopup
         open={openNotifications}
+        notifications={notifications}
         onClose={() => setOpenNotifications(false)}
       />
       <AccountMenu
         open={openAccountMenu}
         menu={accountMenu}
         switchText={switchText}
+        numNotifications={(notifications || []).length}
+        onClickNotifications={handleClickNotifications}
         onSwitch={onSwitch}
         onClose={() => setOpenAccountMenu(false)}
       />

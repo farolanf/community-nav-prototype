@@ -52,6 +52,8 @@
   },
   "dependencies": {
     "classnames": "^2.2.6",
-    "prop-types": "^15.7.2"
+    "moment": "^2.24.0",
+    "prop-types": "^15.7.2",
+    "react-resize-detector": "^4.1.3"
   }
 }

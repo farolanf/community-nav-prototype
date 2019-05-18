@@ -1,5 +1,6 @@
 import React from 'react'
 import cn from 'classnames'
+import ResizeDetector from 'react-resize-detector'
 import ChosenArrow from '../ChosenArrow'
 import styles from './PrimaryNav.module.scss'
 
@@ -16,6 +17,7 @@ const PrimaryNav = ({
   activeLevel1Id,
   activeLevel2Id,
   onClickLogo,
+  onRightMenuResize,
   createHandleClickLevel1,
   createHandleClickLevel2,
   handleClickMore,
@@ -99,6 +101,10 @@ const PrimaryNav = ({
       </div>
 
       <div className={styles.primaryNavRight}>
+        <ResizeDetector
+          handleWidth
+          onResize={onRightMenuResize}
+        />
         {rightMenu && (
           <div className={styles.primaryLevel1}>
             {rightMenu}

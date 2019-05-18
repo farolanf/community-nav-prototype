@@ -9,7 +9,7 @@ Run the following in the `tc-nav-react-demo` folder:
 
 ### Troubleshooting
 
-If you encounter invalid hooks error while running the demo, then:
+If you encounter invalid hook call error while running the demo, then:
 
   - delete tc-nav-react-demo/node_modules/tc-nav-react/node_modules/react
   - delete tc-nav-react-demo/node_modules/tc-nav-react/node_modules/react-dom
