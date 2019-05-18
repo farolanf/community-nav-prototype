@@ -54,6 +54,8 @@ const LoginNav = ({
         open={openAccountMenu}
         menu={accountMenu}
         switchText={switchText}
+        numNotifications={(notifications || []).length}
+        onClickNotifications={handleClickNotifications}
         onSwitch={onSwitch}
         onClose={() => setOpenAccountMenu(false)}
       />

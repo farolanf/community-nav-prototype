@@ -6,6 +6,12 @@
   }
 }
 
+@mixin hide-not-mobile {
+  @media (min-width: $screen-sm + 1px) {
+    display: none;
+  }
+}
+
 @mixin hide-mobile {
   @media (max-width: $screen-sm) {
     display: none;
@@ -53,4 +59,8 @@
 
 .mobile-only {
   @include mobile-only;
+}
+
+.hide-not-mobile {
+  @include hide-not-mobile;
 }
