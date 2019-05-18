@@ -2,6 +2,15 @@
 
 ## Demo
 
+### Build the components
+
+Enter `tc-nav-react` and run:
+
+- `npm install`
+- `npm run build:lib`
+
+### Run the demo
+
 Run the following in the `tc-nav-react-demo` folder:
 
 - `yarn`
