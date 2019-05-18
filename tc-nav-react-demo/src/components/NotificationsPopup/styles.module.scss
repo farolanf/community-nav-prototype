@@ -80,7 +80,9 @@
   .noti-body {
     max-height: 378px;
     overflow: scroll;
-    text-align: center;
+    &.center {
+      text-align: center;
+    }
     .icon-bell {
       background: url(#{$img-path}/bell-big.svg)center center no-repeat;
       background-size: 73px 80px;
@@ -96,15 +98,15 @@
       margin: 23px 0 -8px 0;
     }
     .txt {
-      text-align: center;
-      padding: 19px 60px 12px 60px;
-    }
-    .txt {
       margin: 0;
       color: $gray-90;
       font-size: 14px;
       @include Roboto-Regular;
       line-height: 20px;
+      &.center-txt {
+        text-align: center;
+        padding: 19px 60px 12px 60px;
+      }
       .blue-link {
         color: $blue;
         font-size: 14px;

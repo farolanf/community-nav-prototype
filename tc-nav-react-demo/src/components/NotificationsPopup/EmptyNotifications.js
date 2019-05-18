@@ -13,10 +13,10 @@ const EmptyNotifications = ({ open, onClose, emptyTitle, emptyText, notification
       </div>
       <span className={styles['btn-setting']} role='button' />
     </div>
-    <div className={styles['noti-body']}>
+    <div className={cn(styles['noti-body'], styles.center)}>
       <i className={cn(styles.icons, styles['icon-bell'])} />
       <h4 className={styles.titles}>{emptyTitle}</h4>
-      <div className={styles.txt}>{emptyText}</div>
+      <div className={cn(styles.txt, styles['center-txt'])}>{emptyText}</div>
     </div>
     <div className={styles['noti-footer']}>
       <span className={cn(styles.btn, styles['btn-blue'])} role='button'>
