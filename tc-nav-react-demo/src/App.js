@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import TopNav from './components/TopNav'
 import LoginNav from './components/LoginNav'
+import NotificationSettings from './components/NotificationSettings'
 import './app.css'
 
 function App() {
@@ -298,6 +299,7 @@ function App() {
   const [notificationState, setNotificationState] = useState('new')
   const [activeLevel1Id, setActiveLevel1Id] = useState()
   const [switchText, setSwitchText] = useState('Switch to BUSINESS')
+  const [openSettings, setOpenSettings] = useState()
 
   const handleClickToggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light') 
 
@@ -331,7 +333,7 @@ function App() {
             notifications={notificationState !== 'none' ? notifications : []}
             onClickLogin={handleClickLogin}
             accountMenu={[
-              { title: 'Settings' },
+              { title: 'Settings', onClick: () => setOpenSettings(true) },
               { title: 'Payments', },
               { title: 'All projects', },
               { separator: true },
@@ -358,6 +360,10 @@ function App() {
         <h2>Notifications</h2>
         <button onClick={handleChangeNotificationState}>Change notification state</button>
       </div>
+      <NotificationSettings
+        open={openSettings}
+        onClose={() => setOpenSettings(false)}
+      />
     </div>
   )
 }
