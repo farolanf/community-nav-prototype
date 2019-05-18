@@ -9,9 +9,9 @@ const NotificationsPopup = ({ open, onClose, emptyTitle, emptyText, notification
   <div className={cn(styles['notifications-panel'], open && styles.open)}>
     <div className={styles.backdrop} onClick={onClose} />
     {notifications && notifications.length > 0 ? (
-      <NotificationList notifications={notifications} />
+      <NotificationList notifications={notifications} onClose={onClose} />
     ) : (
-      <EmptyNotifications emptyTitle={emptyTitle} emptyText={emptyText} />
+      <EmptyNotifications emptyTitle={emptyTitle} emptyText={emptyText} onClose={onClose} />
     )}
   </div>
 )

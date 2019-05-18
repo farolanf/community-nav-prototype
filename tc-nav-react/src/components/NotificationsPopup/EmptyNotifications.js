@@ -6,7 +6,11 @@ import styles from './styles.module.scss'
 const EmptyNotifications = ({ open, onClose, emptyTitle, emptyText, notifications }) => (
   <>
     <div className={styles['noti-header']}>
-      <span className={styles['notification-back-btn']} role='button' />
+      <span
+        className={styles['notification-back-btn']}
+        role='button'
+        onClick={onClose}
+      />
       <span className={styles['left-noti']}>Notifications</span>
       <div className={styles.rights}>
         <span className={styles['white-link']} role='button'>Settings</span>
