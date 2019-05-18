@@ -5,7 +5,7 @@ import styles from './styles.module.scss'
 import NotificationButton from '../NotificationButton'
 import NotificationsPopup from '../NotificationsPopup'
 import UserInfo from '../UserInfo'
-import AccountMenu from '../AccountMenu';
+import AccountMenu from '../AccountMenu'
 
 const LoginNav = ({
   loggedIn,
@@ -16,7 +16,7 @@ const LoginNav = ({
   accountMenu,
   switchText,
   onSwitch,
-  onClickLogin,
+  onClickLogin
 }) => {
   const [openNotifications, setOpenNotifications] = useState()
   const [openAccountMenu, setOpenAccountMenu] = useState()
@@ -67,9 +67,12 @@ LoginNav.propTypes = {
   loggedIn: PropTypes.bool,
   avatarSrc: PropTypes.string,
   username: PropTypes.node,
+  notificationButtonState: PropTypes.string,
+  notifications: PropTypes.array,
   accountMenu: PropTypes.array,
   switchText: PropTypes.string,
   onSwitch: PropTypes.func,
+  onClickLogin: PropTypes.func
 }
 
 export default LoginNav

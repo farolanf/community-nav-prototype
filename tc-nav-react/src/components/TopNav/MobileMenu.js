@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import cn from 'classnames'
 import styles from './MobileMenu.module.scss'
 
@@ -16,5 +17,11 @@ const MobileMenu = ({ menu, activeChildId, createHandleClickItem }) => (
     ))}
   </div>
 )
+
+MobileMenu.propTypes = {
+  menu: PropTypes.object,
+  activeChildId: PropTypes.any,
+  createHandleClickItem: PropTypes.func
+}
 
 export default MobileMenu

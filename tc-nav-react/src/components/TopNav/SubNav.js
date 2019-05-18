@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import cn from 'classnames'
 import IconSelect from '../IconSelect'
 import styles from './SubNav.module.scss'
@@ -29,5 +30,15 @@ const SubNav = ({
     </div>
   </div>
 )
+
+SubNav.propTypes = {
+  open: PropTypes.bool,
+  menu: PropTypes.object,
+  activeChildId: PropTypes.any,
+  showIndicator: PropTypes.bool,
+  indicatorX: PropTypes.number,
+  createHandleClickItem: PropTypes.func,
+  createSetRef: PropTypes.func
+}
 
 export default SubNav

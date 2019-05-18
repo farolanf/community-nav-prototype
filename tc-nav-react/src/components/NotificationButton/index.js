@@ -8,12 +8,15 @@ const NotificationButton = ({ className, state, onClick, notificationsPopupOpen 
     className={cn(styles.notificationButton, styles[state], notificationsPopupOpen && styles.isNotificationsPopupOpen, className)}
     onClick={onClick}
   >
-    <img src="/img/icon-bell.svg" alt="notification" />
+    <img src='/img/icon-bell.svg' alt='notification' />
   </div>
 )
 
 NotificationButton.propTypes = {
-  state: PropTypes.oneOf(['none', 'new', 'seen'])
+  className: PropTypes.string,
+  state: PropTypes.oneOf(['none', 'new', 'seen']),
+  onClick: PropTypes.func,
+  notificationsPopupOpen: PropTypes.bool
 }
 
 export default NotificationButton

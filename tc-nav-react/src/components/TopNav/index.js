@@ -5,11 +5,11 @@ import _ from 'lodash'
 
 import styles from './index.module.scss'
 
-import MobileNav from './MobileNav';
-import MobileSubNav from './MobileSubNav';
-import MobileMenu from './MobileMenu';
-import PrimaryNav from './PrimaryNav';
-import SubNav from './SubNav';
+import MobileNav from './MobileNav'
+import MobileSubNav from './MobileSubNav'
+import MobileMenu from './MobileMenu'
+import PrimaryNav from './PrimaryNav'
+import SubNav from './SubNav'
 
 const moreId = 'more'
 
@@ -44,7 +44,7 @@ const TopNav = ({
 }) => {
   const [cache] = useState({
     refs: {},
-    slide: {},
+    slide: {}
   })
   const [collapsed, setCollapsed] = useState(true)
   const [activeLevel1Id, setActiveLevel1Id] = useState()
@@ -237,7 +237,7 @@ const TopNav = ({
           setTimeout(() => {
             el.style.transition = ''
             el.style.transform = ''
-          }, 250);
+          }, 250)
         })
       })
     }
@@ -390,14 +390,14 @@ TopNav.propTypes = {
   menu: PropTypes.array.isRequired,
 
   rightMenu: PropTypes.node,
-  
+
   logo: PropTypes.node,
 
   /** light|dark etc */
   theme: PropTypes.string,
 
   currentLevel1Id: PropTypes.any,
-  
+
   onChangeLevel1Id: PropTypes.func
 }
 

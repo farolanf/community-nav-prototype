@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import cn from 'classnames'
 import ResizeDetector from 'react-resize-detector'
 import ChosenArrow from '../ChosenArrow'
@@ -27,7 +28,7 @@ const PrimaryNav = ({
   chosenArrowX
 }) => {
   const filterNotInMore = menu => !(moreMenu || []).find(x => x.id === menu.id)
-  
+
   return (
     <div className={cn(styles.primaryNavContainer, showLeftMenu && styles.primaryNavContainerOpen)}>
       <div className={styles.primaryNav} ref={createSetRef('primaryNav')}>
@@ -95,7 +96,7 @@ const PrimaryNav = ({
                 </div>
               )}
             </div>
-          ),
+          )
         ]))}
         <ChosenArrow show={showChosenArrow} x={chosenArrowX} />
       </div>
@@ -113,6 +114,29 @@ const PrimaryNav = ({
       </div>
     </div>
   )
+}
+
+PrimaryNav.propTypes = {
+  collapsed: PropTypes.bool,
+  showLeftMenu: PropTypes.bool,
+  logo: PropTypes.node,
+  menu: PropTypes.array,
+  rightMenu: PropTypes.node,
+  moreMenu: PropTypes.array,
+  openMore: PropTypes.bool,
+  onCloseMore: PropTypes.func,
+  moreId: PropTypes.any,
+  activeLevel1Id: PropTypes.any,
+  activeLevel2Id: PropTypes.any,
+  onClickLogo: PropTypes.func,
+  onRightMenuResize: PropTypes.func,
+  createHandleClickLevel1: PropTypes.func,
+  createHandleClickLevel2: PropTypes.func,
+  handleClickMore: PropTypes.func,
+  createHandleClickMoreItem: PropTypes.func,
+  createSetRef: PropTypes.func,
+  showChosenArrow: PropTypes.bool,
+  chosenArrowX: PropTypes.number
 }
 
 export default PrimaryNav

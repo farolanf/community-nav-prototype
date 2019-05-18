@@ -55,7 +55,7 @@ const AccountMenu = ({
         <img className={styles['switch-icon']} src='/img/icon-switch-business.svg' alt='switch' />
         <span className={styles['switch-to-busniness']}>Switch to BUSINESS</span>
       </div>
-      
+
       <div className={styles.menu}>
 
         <div className={styles['notification-mobile']} onClick={onClickNotifications}>
@@ -67,8 +67,7 @@ const AccountMenu = ({
               ({numNotifications})
             </span>
           </div>
-          <span className={styles['notification-right-arrow']}>
-          </span>
+          <span className={styles['notification-right-arrow']} />
         </div>
 
         <span className={cn(styles.separator, styles['hide-not-mobile'])} />
@@ -106,12 +105,13 @@ AccountMenu.defaultProps = {
     { separator: true },
     { title: 'Help', href: null, onClick: null },
     { title: 'About Topcoder', href: null, onClick: null },
-    { title: 'Log Out', href: null, onClick: null },
+    { title: 'Log Out', href: null, onClick: null }
   ]
 }
 
 AccountMenu.propTypes = {
   open: PropTypes.bool,
+  onClose: PropTypes.func,
   avatarSrc: PropTypes.string,
   username: PropTypes.string,
   email: PropTypes.string,
@@ -124,4 +124,3 @@ AccountMenu.propTypes = {
 }
 
 export default AccountMenu
-

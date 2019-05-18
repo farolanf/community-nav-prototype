@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styles from './MobileNav.module.scss'
 
 const MobileNav = ({ showLeftMenu, onClickLeftMenu, logo, rightMenu }) => (
@@ -20,5 +21,12 @@ const MobileNav = ({ showLeftMenu, onClickLeftMenu, logo, rightMenu }) => (
     )}
   </div>
 )
+
+MobileNav.propTypes = {
+  showLeftMenu: PropTypes.bool,
+  onClickLeftMenu: PropTypes.func,
+  logo: PropTypes.node,
+  rightMenu: PropTypes.node
+}
 
 export default MobileNav

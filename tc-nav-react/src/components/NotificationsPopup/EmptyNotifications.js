@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import cn from 'classnames'
 import styles from './styles.module.scss'
 
-const EmptyNotifications = ({ open, onClose, emptyTitle, emptyText, notifications }) => (
+const EmptyNotifications = ({ onClose, emptyTitle, emptyText }) => (
   <>
     <div className={styles['noti-header']}>
       <span
@@ -34,16 +34,17 @@ EmptyNotifications.defaultProps = {
   emptyTitle: 'Good job! You’re all caught up',
   emptyText: (
     <div>
-      Join challenges and check your notification settings if 
-      you don’t receive notifications. We’re actively adding 
+      Join challenges and check your notification settings if
+      you don’t receive notifications. We’re actively adding
       new notifications. Read our <a href='/' className={styles.blueLink}>blog post</a> for more info
     </div>
   )
 }
 
 EmptyNotifications.propTypes = {
+  onClose: PropTypes.func,
   emptyTitle: PropTypes.node,
-  emptyText: PropTypes.node,
+  emptyText: PropTypes.node
 }
 
 export default EmptyNotifications

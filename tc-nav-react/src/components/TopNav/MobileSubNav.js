@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import cn from 'classnames'
 import styles from './MobileSubNav.module.scss'
 
@@ -9,7 +10,7 @@ const MobileSubNav = ({ open, menu, activeChildId, onClick, createHandleClickIte
     <div className={styles.mobileSubNavMask} />
     <button className={styles.mobileSubNavHeader} onClick={onClick}>
       <span>{menu.title}</span>
-      <img src="/img/arrow-small-down.svg" alt="dropdown icon" />
+      <img src='/img/arrow-small-down.svg' alt='dropdown icon' />
     </button>
     {open && (
       <div className={styles.mobileSubNavContent}>
@@ -27,5 +28,13 @@ const MobileSubNav = ({ open, menu, activeChildId, onClick, createHandleClickIte
     )}
   </div>
 )
+
+MobileSubNav.propTypes = {
+  open: PropTypes.bool,
+  menu: PropTypes.object,
+  activeChildId: PropTypes.any,
+  onClick: PropTypes.func,
+  createHandleClickItem: PropTypes.func
+}
 
 export default MobileSubNav

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import cn from 'classnames'
 import styles from './styles.module.scss'
 
@@ -26,9 +27,9 @@ const DropdownBox = ({ open, onClick, onClose, checked, value, options, onChange
       <div className={styles['backdrop']} onClick={handleClose} />
       <span className={styles['selected-label']}>
         {optionLabel(value, options)}
-        <i className={styles['dropdown-arrow']}></i>
+        <i className={styles['dropdown-arrow']} />
       </span>
-      
+
       <ul className={styles['options']}>
         {options.map(opt => (
           <li
@@ -42,6 +43,16 @@ const DropdownBox = ({ open, onClick, onClose, checked, value, options, onChange
       </ul>
     </div>
   )
+}
+
+DropdownBox.propTypes = {
+  open: PropTypes.bool,
+  onClick: PropTypes.func,
+  onClose: PropTypes.func,
+  checked: PropTypes.bool,
+  value: PropTypes.any,
+  options: PropTypes.array,
+  onChange: PropTypes.func
 }
 
 export default DropdownBox

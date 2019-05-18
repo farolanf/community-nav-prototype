@@ -36,9 +36,17 @@ const ItemControl = ({ control, name, value, options, onChange }) => {
   )
 }
 
+ItemControl.propTypes = {
+  control: PropTypes.string,
+  name: PropTypes.string,
+  value: PropTypes.any,
+  options: PropTypes.array,
+  onChange: PropTypes.func
+}
+
 /**
  * Render option controls.
- * 
+ *
  * @param item {item} The option object
  * @param onChange {function} Called with name (eg. website) and the new value
  */
@@ -54,7 +62,7 @@ const Item = ({ item, onChange }) => {
             {item.description}
           </div>
         </div>
-        
+
         <div className={styles['website']}>
           <ItemControl
             control={item.websiteControl}
@@ -64,7 +72,7 @@ const Item = ({ item, onChange }) => {
             onChange={onChange}
           />
         </div>
-        
+
         <div className={styles['as-email']}>
           <ItemControl
             control={item.emailControl}
@@ -75,12 +83,17 @@ const Item = ({ item, onChange }) => {
           />
         </div>
       </div>
-      
+
       <div className={styles['description-mobile']}>
         {item.description}
       </div>
     </li>
   )
+}
+
+Item.propTypes = {
+  item: PropTypes.object,
+  onChange: PropTypes.func
 }
 
 const NotificationSettings = ({ open, settings, theme, onChange, onClose, onSave }) => {
@@ -94,7 +107,6 @@ const NotificationSettings = ({ open, settings, theme, onChange, onClose, onSave
         category,
         settings: settingsWithId.filter(x => x.category === category)
       }))
-
   }, [settingsWithId])
 
   const createHandleChangeItem = item => (name, value) => {
@@ -127,13 +139,13 @@ const NotificationSettings = ({ open, settings, theme, onChange, onClose, onSave
           </span>
         </div>
       </div>
-      
+
       <div className={styles['settings-panel']}>
 
         <div className={styles['title']}>
           Notifications
         </div>
-        
+
         {categories.map(category => (
           <div className={styles['panel-content']} key={category.category}>
             <div className={styles['section-title']}>
@@ -143,12 +155,12 @@ const NotificationSettings = ({ open, settings, theme, onChange, onClose, onSave
               <div className={styles['website']}>
                 <span><em>Website</em></span>
               </div>
-              
+
               <div className={styles['as-email']}>
                 <span><em>As email</em></span>
               </div>
             </div>
-          
+
             <ul className={styles['section-list']}>
               {category.settings.map((item, i) => (
                 <Item
@@ -192,16 +204,18 @@ NotificationSettings.defaultProps = {
         { value: 'off', label: 'Off' },
         { value: 'immediately', label: 'Immediately' },
         { value: 'daily', label: 'Daily' },
-        { value: 'everyOtherDay', label: 'Every other day' },
+        { value: 'everyOtherDay', label: 'Every other day' }
       ]
     }
   ]
 }
 
 NotificationSettings.propTypes = {
+  open: PropTypes.bool,
+
   /**
    * Array of options object, each with properties:
-   * 
+   *
    *   - id (optional)
    *   - title {string} Option title
    *   - description {string} Option description
@@ -219,18 +233,18 @@ NotificationSettings.propTypes = {
 
   /**
    * Called when changing settings.
-   * 
+   *
    * @param settings {array} The updated settings
    * @param option {object} The specific settings item that changed
    * @param name {object} The value that changed. Eg. website
-   * 
+   *
   */
   onChange: PropTypes.func,
 
   /** Called when save button is clicked */
   onSave: PropTypes.func,
 
-  onClose: PropTypes.func,
+  onClose: PropTypes.func
 }
 
 export default NotificationSettings
