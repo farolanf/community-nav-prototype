@@ -46,7 +46,7 @@ const Item = ({ item, onDismiss }) => (
   </div>
 )
 
-const NotificationList = ({ notifications, onDismiss, onSettings }) => {
+const NotificationList = ({ notifications, onDismiss, onSettings, onClose }) => {
   const categories = _.uniq(
     (notifications || []).map(noti => noti.category).filter(x => x)
   ).sort((a, b) => a.localeCompare(b))
@@ -65,6 +65,11 @@ const NotificationList = ({ notifications, onDismiss, onSettings }) => {
   return (
     <>
       <div className={styles['noti-header']}>
+        <span
+          className={styles['notification-back-btn']}
+          role='button'
+          onClick={onClose}
+        />
         <span className={styles['left-noti']}>Notifications</span>
         <div className={styles.rights}>
           <span
