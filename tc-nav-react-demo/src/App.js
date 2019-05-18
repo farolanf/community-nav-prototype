@@ -235,6 +235,64 @@ function App() {
     }
   ]
 
+  const notifications = [
+    {
+      content: `Northumbrian Water (NWL) - Customer Engagement Gamification Mobile App Design Concepts Challenge is now open for registrations`,
+      tags: ['Concept Design'],
+      timestamp: Date.now() - 2 * 60 * 60 * 1000
+    },
+    {
+      content: `Eniatus Bank Internal Product Dashboard Design Challenge is now open for registrations`,
+      tags: ['Application Front-End Design'],
+      timestamp: Date.now() - 2.5 * 60 * 60 * 1000
+    },
+    {
+      content: `Your submission ID513A23433-1 is now in review`,
+      category: 'Topcoder Copilot Recruitment Challenge',
+      timestamp: Date.now() - 10 * 60 * 1000,
+    },
+    {
+      content: `Your submission ID513A23433-1 was processed successfully`,
+      category: 'Topcoder Copilot Recruitment Challenge',
+      timestamp: Date.now() - 2.1 * 60 * 60 * 1000,
+    },
+    {
+      content: `Your submission ID513A23433-2 was uploaded successfully`,
+      category: 'Topcoder Copilot Recruitment Challenge',
+      timestamp: Date.now() - 2 * 60 * 60 * 1000,
+    },
+    {
+      content: `Challenge is now in Review phase. No new submissions are accepted at this point.`,
+      category: 'TOSCA Editor - Web Application Wireframe Challenge',
+      timestamp: Date.now() - 60 * 60 * 1000,
+    },
+    {
+      content: `Northumbrian Water (NWL) - Customer Engagement Gamification Mobile App Design Concepts Challenge is now open for registrations`,
+      tags: ['Concept Design'],
+      timestamp: new Date('2019-04-05'),
+    },
+    {
+      content: `FAST 48Hr! Patient Concierge Chatbot Web Application UX Testing Challenge is now open for registrations`,
+      tags: ['Rapid UX'],
+      timestamp: new Date('2019-04-01 10:43'),
+    },
+    {
+      content: `Juno Claims Reporting Tool iOS Mobile Design Application is now open for registrations`,
+      tags: ['Application Front-End Design'],
+      timestamp: new Date('2019-03-28 15:45'),
+    },
+    {
+      content: `Your submission ID513A23433-1 was uploaded successfully`,
+      category: 'Topcoder Copilot Recruitment Challenge',
+      timestamp: new Date('2019-04-10 10:52'),
+    },
+    {
+      content: `You are now registered for Topcoder Copilot Recruitment Challenge`,
+      category: 'Topcoder Copilot Recruitment Challenge',
+      timestamp: new Date('2019-04-08 12:45'),
+    }
+  ]
+
   const [theme, setTheme] = useState('light')
   const [loggedIn, setLoggedIn] = useState()
   const [notificationState, setNotificationState] = useState('new')
@@ -270,6 +328,7 @@ function App() {
             avatarSrc='/img/img-vic-tor-avatar.svg'
             username='vic-tor'
             notificationButtonState={notificationState}
+            notifications={notifications}
             onClickLogin={handleClickLogin}
             accountMenu={[
               { title: 'Settings' },

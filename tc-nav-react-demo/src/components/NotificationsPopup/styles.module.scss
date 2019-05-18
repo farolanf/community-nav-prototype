@@ -2,18 +2,18 @@
 @import "../../assets/sass/_global/common_ui";
 @import "../../assets/sass/_global/utils";
 
-.notificationsPanel {
+.notifications-panel {
   background-color: $white;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 5px 35px 5px rgba(21, 21, 22, 0.1), 0 10px 14px 0 rgba(21, 21, 22, 0.3);
   width: 480px;
   height: auto;
-  z-index: 100;
-  display: none;
   position: absolute;
-  right: 5px;
+  right: 10px;
   top: 40px;
+  display: none;
+  z-index: 100;
 
   &.open {
     display: flex;
@@ -21,7 +21,7 @@
 
   @include backdrop;
 
-  .notiHeader {
+  .noti-header {
     background-color: $turquoise-dark;
     border-radius: 10px 10px 0 0;
     padding: 10px 20px 10px;
@@ -31,7 +31,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .leftNoti {
+    .notification-back-btn {
+      @include mobile-only;
+    }
+    .left-noti {
       background: url(#{$img-path}/icon-bell.svg) left center no-repeat;
       background-size: 16px;
       padding-left: 26px;
@@ -41,7 +44,9 @@
       text-align: left;
     }
     .rights {
-      .whiteLink {
+      @include hide-mobile;
+
+      .white-link {
         color: $white;
         display: inline-block;
         vertical-align: middle;
@@ -60,21 +65,24 @@
         border-radius: 100%;
         display: inline-block;
         vertical-align: middle;
+        display: none;
       }
     }
+
+    .btn-setting {
+      @include mobile-only;
+    }
   }
-  .notiBody {
+  .noti-body {
     max-height: 378px;
     overflow: scroll;
     text-align: center;
-    .iconBell {
+    .icon-bell {
       background: url(#{$img-path}/bell-big.svg)center center no-repeat;
       background-size: 73px 80px;
       width: 73px;
       height: 80px;
       margin: 50px 0 10px;
-      display: inline-block;
-      vertical-align: middle;
     }
     .titles {
       color: $gray-90;
@@ -86,12 +94,14 @@
     .txt {
       text-align: center;
       padding: 19px 60px 12px 60px;
+    }
+    .txt {
       margin: 0;
       color: $gray-90;
       font-size: 14px;
       @include Roboto-Regular;
       line-height: 20px;
-      .blueLink {
+      .blue-link {
         color: $blue;
         font-size: 14px;
       }
@@ -248,7 +258,7 @@
       }
     }
   }
-  .notiFooter {
+  .noti-footer {
     text-align: center;
     padding: 15px 0 45px 0;
   }
@@ -269,11 +279,11 @@
   }
 }
 
-.notificationsPanel {
+.notifications-panel {
   max-height: 70vh;
   flex-direction: column;
 
-  .notiBody {
+  .noti-body {
     flex: 1;
     max-height: none;
   }
