@@ -10,6 +10,8 @@ const componentsDir = path.resolve(__dirname, 'src/components')
 
 const files = fs.readdirSync(componentsDir)
 
+const components = []
+
 files.forEach(file => {
   const name = file.replace(path.extname(file), '')
   const config = Object.assign({}, baseConfig)
@@ -18,13 +20,16 @@ files.forEach(file => {
   config.output.filename = 'index.js'
   process.env.NODE_ENV === 'production' && rf.sync(config.output.path)
   webpack(config, handleError)
+  components.push(name)
 })
 
 const config = Object.assign({}, baseConfig)
 config.entry = path.join(srcDir, 'index.js')
 config.output.path = __dirname
 config.output.filename = 'index.js'
-config.externals['./TopNav'] = './TopNav'
+components.forEach(comp => {
+  config.externals[`./components/${comp}`] = `./${comp}`
+})
 webpack(config, handleError)
 
 function handleError (err, stats) {
