@@ -69,6 +69,8 @@ const TopNav = ({
   const [moreMenu, setMoreMenu] = useState()
   const [openMore, setOpenMore] = useState()
 
+  const regenerateMoreMenu = () => setMoreMenu([])
+
   const createSetRef = id => el => {
     cache.refs[id] = el
   }
@@ -210,25 +212,44 @@ const TopNav = ({
 
   const handleClickSubMenu = () => setShowMobileSubMenu(x => !x)
 
-  // slide menu
   useEffect(() => {
-    leftNav.forEach(menu => {
-      if (!cache.slide[menu.id] || !cache.refs[menu.id]) return
-      cache.slide[menu.id] = false
-      const el = cache.refs[menu.id]
-      const rect = el.getBoundingClientRect()
-      const relativeX = menu.initialX - rect.x
-      el.style.transform = `translateX(${relativeX}px)`
-      setTimeout(() => {
-        el.style.transition = 'transform 250ms ease-out'
-        el.style.transform = `translateX(0px)`
+    const doSlide = () => {
+      leftNav.forEach(menu => {
+        if (!cache.slide[menu.id] || !cache.refs[menu.id]) return
+        cache.slide[menu.id] = false
+        const el = cache.refs[menu.id]
+        const rect = el.getBoundingClientRect()
+        const relativeX = menu.initialX - rect.x
+        el.style.transform = `translateX(${relativeX}px)`
         setTimeout(() => {
-          el.style.transition = ''
-          el.style.transform = ''
-        }, 250);
+          el.style.transition = 'transform 250ms ease-out'
+          el.style.transform = `translateX(0px)`
+          setTimeout(() => {
+            el.style.transition = ''
+            el.style.transform = ''
+          }, 250);
+        })
       })
-    })
-  }, [collapsed, leftNav, cache.refs, cache.slide])
+    }
+    const setOverflow = set => {
+      cache.refs.primaryNav.style.overflow = set ? 'hidden' : ''
+      const containers = Object.keys(cache.refs)
+        .filter(key => key.startsWith('level2Container'))
+        .map(key => cache.refs[key])
+      containers.forEach(el => {
+        el.style.overflow = set ? 'hidden' : ''
+      })
+    }
+    // set overflow first to have correct final position
+    setOverflow(true)
+    doSlide()
+    // overflow must not be set, otherwise popups won't show
+    setOverflow(false)
+  }, [cache.slide, cache.refs, leftNav])
+
+  const handleRightMenuResize = () => {
+    regenerateMoreMenu()
+  }
 
   // trigger more menu generation on level 1 item change
   useEffect(() => {
@@ -254,16 +275,17 @@ const TopNav = ({
         // add the item if it's overflowing
         if (rect.right > prect.right) {
           newMoreMenu.unshift(menu)
-        } else if (newMoreMenu.length) {
-          // add the last non overflowed item to make sure we have space
-          // for the 'more' menu
+        } else if (newMoreMenu.length && prect.right - rect.right < 100) {
+          // make sure we have space for the 'more' menu
           newMoreMenu.unshift(menu)
+        } else {
           break
         }
       }
       newMoreMenu.length && setMoreMenu(newMoreMenu)
     }
     const setOverflow = set => {
+      cache.refs.primaryNavContainer.style.overflow = set ? 'hidden' : ''
       cache.refs.primaryNav.style.overflow = set ? 'hidden' : ''
       const containers = Object.keys(cache.refs)
         .filter(key => key.startsWith('level2Container'))
@@ -286,7 +308,7 @@ const TopNav = ({
 
   useEffect(() => {
     // trigger more menu generation on resize
-    const onResize = _.debounce(() => setMoreMenu([]), 100)
+    const onResize = _.debounce(() => regenerateMoreMenu([]), 100)
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
@@ -328,6 +350,7 @@ const TopNav = ({
           activeLevel1Id={activeLevel1Id}
           activeLevel2Id={activeLevel2Id}
           onClickLogo={handleClickLogo}
+          onRightMenuResize={handleRightMenuResize}
           createHandleClickLevel1={createHandleClickLevel1}
           createHandleClickLevel2={createHandleClickLevel2}
           handleClickMore={handleClickMore}
